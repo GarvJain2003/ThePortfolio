@@ -18,6 +18,25 @@ export const OutcomeProvider = ({ children }) => {
 
     const initialPosts = [
         {
+            id: 0,
+            author: "Garv Jain",
+            time: "Pinned Post",
+            title: "Welcome, Talent Scout!",
+            content: "If you are reading this, you are probably looking for a sign to hire me. Consider this it! 🪄 I've built this interface to demonstrate my frontend skills. Feel free to explore, or use the quick links below.",
+            image: null,
+            likes: 999,
+            comments: [
+                { id: 999, author: "The Sorting Hat", text: "I sense a strong work ethic and a sharp mind. Definitely a hire!", time: "Ancient times" }
+            ],
+            liked: true,
+            isPinned: true,
+            actions: [
+                { label: "View Resume", action: "resume", icon: "Scroll" },
+                { label: "See Projects", action: "projects", icon: "Sparkles" },
+                { label: "Contact Me", action: "owl-post", icon: "Feather" }
+            ]
+        },
+        {
             id: 1,
             author: "Garv Jain",
             time: "2 hours ago",

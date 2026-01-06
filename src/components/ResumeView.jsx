@@ -23,14 +23,14 @@ const ResumeView = () => {
 
             {/* Main Content Grid */}
             <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
-                
+
                 {/* Left Column: Skills & specialized knowledge */}
                 <div className="md:col-span-4 space-y-6">
                     <div className="bg-white border border-fb-border p-4 shadow-sm relative">
                         <h3 className="font-headline text-xl text-fb-blue mb-4 border-b border-fb-border pb-2 flex items-center gap-2">
                             <Star size={18} /> Known Spells
                         </h3>
-                        
+
                         <div className="space-y-4">
                             <div>
                                 <h4 className="font-bold text-xs uppercase tracking-wider text-ink/50 mb-2">Frontend Charms</h4>
@@ -42,7 +42,7 @@ const ResumeView = () => {
                                     ))}
                                 </div>
                             </div>
-                            
+
                             <div>
                                 <h4 className="font-bold text-xs uppercase tracking-wider text-ink/50 mb-2">Backend Potions</h4>
                                 <div className="flex flex-wrap gap-2">
@@ -54,7 +54,7 @@ const ResumeView = () => {
                                 </div>
                             </div>
 
-                             <div>
+                            <div>
                                 <h4 className="font-bold text-xs uppercase tracking-wider text-ink/50 mb-2">Tools & Artifacts</h4>
                                 <div className="flex flex-wrap gap-2">
                                     {['Git', 'Docker', 'AWS', 'Figma'].map(skill => (
@@ -91,14 +91,14 @@ const ResumeView = () => {
                                     <span>2024 - Present</span>
                                 </div>
                                 <p className="font-serif text-sm leading-relaxed text-ink/80 text-justify">
-                                    Leading the development of the new mesmerizing interface for the wizarding world. 
+                                    Leading the development of the new mesmerizing interface for the wizarding world.
                                     Optimizing rendering spells to ensure 60fps performance on all crystal balls and mirrors.
                                     Mentoring junior wizards in the arts of component composition and state management.
                                 </p>
                             </div>
 
-                             {/* Experience Item 2 */}
-                             <div className="relative pl-4 border-l-2 border-fb-border">
+                            {/* Experience Item 2 */}
+                            <div className="relative pl-4 border-l-2 border-fb-border">
                                 <div className="absolute -left-[5px] top-0 w-2 h-2 bg-fb-blue/40 rounded-full"></div>
                                 <h4 className="font-bold text-lg text-ink/90">Full Stack Developer</h4>
                                 <div className="flex justify-between items-center text-xs text-ink/50 mb-2">
@@ -106,7 +106,7 @@ const ResumeView = () => {
                                     <span>2022 - 2024</span>
                                 </div>
                                 <p className="font-serif text-sm leading-relaxed text-ink/80 text-justify">
-                                    Contracted to build various magical tools and automated parchment systems. 
+                                    Contracted to build various magical tools and automated parchment systems.
                                     Implemented secure owl-post messaging protocols using WebSockets.
                                     Reduced potion brewing time (build time) by 40% using modern bundlers.
                                 </p>
@@ -118,26 +118,29 @@ const ResumeView = () => {
                         <h3 className="font-headline text-xl text-fb-blue mb-6 border-b border-fb-border pb-2 flex items-center gap-2">
                             <Award size={18} /> Education & O.W.L.s
                         </h3>
-                         <div className="relative pl-4 border-l-2 border-fb-border">
-                                <div className="absolute -left-[5px] top-0 w-2 h-2 bg-yellow-500 rounded-full"></div>
-                                <h4 className="font-bold text-lg text-ink/90">Hogwarts School of Witchcraft and Wizardry</h4>
-                                <div className="flex justify-between items-center text-xs text-ink/50 mb-2">
-                                    <span>Ravenclaw House</span>
-                                    <span>Graduated with Honors</span>
-                                </div>
-                                <p className="font-serif text-sm leading-relaxed text-ink/80">
-                                    Specialized in Arithmancy (Algorithms) and Ancient Runes (Coding Languages).
-                                    Captain of the Coding Gobstones Club.
-                                </p>
+                        <div className="relative pl-4 border-l-2 border-fb-border">
+                            <div className="absolute -left-[5px] top-0 w-2 h-2 bg-yellow-500 rounded-full"></div>
+                            <h4 className="font-bold text-lg text-ink/90">Hogwarts School of Witchcraft and Wizardry</h4>
+                            <div className="flex justify-between items-center text-xs text-ink/50 mb-2">
+                                <span>Ravenclaw House</span>
+                                <span>Graduated with Honors</span>
                             </div>
+                            <p className="font-serif text-sm leading-relaxed text-ink/80">
+                                Specialized in Arithmancy (Algorithms) and Ancient Runes (Coding Languages).
+                                Captain of the Coding Gobstones Club.
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>
-            
+
             <div className="text-center">
-                 <button className="bg-fb-blue text-white px-6 py-2 rounded-sm font-bold shadow-md hover:bg-fb-blue-dark transition-colors flex items-center gap-2 mx-auto">
+                <button
+                    onClick={() => window.print()}
+                    className="bg-fb-blue text-white px-6 py-2 rounded-sm font-bold shadow-md hover:bg-fb-blue-dark transition-colors flex items-center gap-2 mx-auto"
+                >
                     <Feather size={16} /> Send Owl (Download PDF)
-                 </button>
+                </button>
             </div>
         </div>
     );

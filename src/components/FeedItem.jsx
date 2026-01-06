@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Heart, MessageCircle, Share2, Feather } from 'lucide-react';
+import { Heart, MessageCircle, Share2, Feather, Scroll, Sparkles, Pin } from 'lucide-react';
 import { useOutcome } from '../context/OutcomeContext';
 
 const FeedItem = ({ item, onNavigate }) => {
@@ -14,8 +14,17 @@ const FeedItem = ({ item, onNavigate }) => {
         setCommentText("");
     };
 
+    const iconMap = {
+        "Scroll": Scroll,
+        "Sparkles": Sparkles,
+        "Feather": Feather
+    };
+
     return (
-        <div className="bg-white border border-fb-border p-4 shadow-sm group mb-4">
+        <div
+            data-component="FeedItem"
+            className={`bg-white border p-4 shadow-sm group mb-4 transition-all ${item.isPinned ? 'border-yellow-500/30 bg-yellow-50/10' : 'border-fb-border'}`}
+        >
             {/* Post Header */}
             <div className="flex justify-between items-start mb-3">
                 <div>
@@ -23,7 +32,10 @@ const FeedItem = ({ item, onNavigate }) => {
                         {item.author}
                         {item.author === "Garv Jain" && <span className="text-[10px] text-white bg-fb-blue px-1 rounded-full" title="Verified Wizard">✓</span>}
                     </h3>
-                    <p className="text-[10px] text-gray-500 uppercase tracking-wide">Published via <Feather size={10} className="inline" /> • {item.time}</p>
+                    <p className="text-[10px] text-gray-500 uppercase tracking-wide flex items-center gap-1">
+                        {item.isPinned && <Pin size={10} className="text-yellow-600 fill-yellow-600 rotate-45" />}
+                        Published via <Feather size={10} className="inline" /> • {item.time}
+                    </p>
                 </div>
                 {item.title && (
                     <h2 className="font-headline text-xl font-bold text-ink/80">{item.title}</h2>
@@ -35,6 +47,25 @@ const FeedItem = ({ item, onNavigate }) => {
                 <p className="font-serif text-base leading-relaxed mb-3 text-justify">
                     {item.content}
                 </p>
+
+                {/* Special Actions for Pinned Post */}
+                {item.actions && (
+                    <div className="flex flex-wrap gap-2 my-4">
+                        {item.actions.map((action, idx) => {
+                            const Icon = iconMap[action.icon] || Feather;
+                            return (
+                                <button
+                                    key={idx}
+                                    onClick={() => onNavigate(action.action)}
+                                    className="flex items-center gap-2 px-4 py-2 bg-fb-blue/5 border border-fb-blue/20 rounded text-fb-blue font-bold text-xs hover:bg-fb-blue hover:text-white transition-all shadow-sm transform hover:-translate-y-0.5"
+                                >
+                                    <Icon size={14} /> {action.label}
+                                </button>
+                            );
+                        })}
+                    </div>
+                )}
+
                 {item.image && (
                     <div className="border-4 border-double border-ink/20 p-1 bg-paper-dark transform rotate-1 hover:rotate-0 transition-transform duration-500 cursor-pointer shadow-md">
                         <img src={item.image} alt="Post Attachment" className="w-full h-64 object-cover sepia-[.3] hover:sepia-0 transition-all duration-700" />

@@ -13,7 +13,7 @@ export const OutcomeProvider = ({ children }) => {
         house: "Ravenclaw",
         level: 24,
         wand: "13\" Silicon",
-        avatar: "https://api.dicebear.com/7.x/bit/svg?seed=Garv&scale=120"
+        avatar: "/profile.png"
     };
 
     const initialPosts = [

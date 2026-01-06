@@ -5,18 +5,21 @@ const Sidebar = ({ onNavigate }) => {
         <div className="space-y-6">
             {/* Profile Card */}
             <div className="border border-ink/40 bg-paper p-2 shadow-[2px_2px_0px_0px_rgba(0,0,0,0.8)]">
-                <div className="aspect-square bg-ink/10 mb-2 relative overflow-hidden group border border-ink/20">
-                    <img
-                        src="https://api.dicebear.com/7.x/bit/svg?seed=Garv&scale=120"
-                        alt="Profile"
-                        className="w-full h-full object-cover grayscale contrast-125 sepia group-hover:sepia-0 transition-all duration-700"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end justify-center pb-2">
-                        <button
-                            onClick={() => onNavigate('profile')}
-                            className="text-xs bg-white/20 backdrop-blur-sm text-white px-2 py-1 rounded border border-white/40 hover:bg-white/40">
-                            Edit Profile
-                        </button>
+                <div className="relative group/profile cursor-pointer" onClick={() => onNavigate('profile')}>
+                    <div className="w-24 h-24 mx-auto border-4 border-double border-ink rounded-full overflow-hidden relative shadow-lg group-hover/profile:shadow-[0_0_15px_rgba(59,130,246,0.6)] transition-all duration-500">
+                        <img src="/profile.png" className="w-full h-full object-cover group-hover/profile:scale-110 group-hover/profile:sepia-[.3] transition-transform duration-700" alt="Profile" />
+
+                        {/* Magical Mist overlay */}
+                        <div className="absolute inset-0 bg-indigo-500/0 group-hover/profile:bg-indigo-500/10 transition-colors duration-500"></div>
+                    </div>
+
+                    {/* Floating Sorting Hat Overlay */}
+                    <div className="absolute -top-6 left-1/2 transform -translate-x-1/2 opacity-0 group-hover/profile:opacity-100 transition-all duration-500 group-hover/profile:-translate-y-2 pointer-events-none drop-shadow-2xl z-20">
+                        <img
+                            src="https://cdn-icons-png.flaticon.com/512/10609/10609657.png"
+                            alt="Sorting Hat"
+                            className="w-16 h-16 drop-shadow-md filter brightness-75 contrast-125"
+                        />
                     </div>
                 </div>
                 <h3 className="font-headline font-bold text-xl text-center border-b border-ink/20 pb-1 mb-2">Garv Jain</h3>
@@ -25,15 +28,15 @@ const Sidebar = ({ onNavigate }) => {
                 <div className="text-xs space-y-1 px-1">
                     <div className="flex justify-between items-center group cursor-pointer hover:bg-ink/5 p-0.5 rounded">
                         <span className="opacity-70">Level:</span>
-                        <b className="text-fb-blue">24 (Senior)</b>
+                        <b className="text-fb-blue">{user.level}</b>
                     </div>
                     <div className="flex justify-between items-center group cursor-pointer hover:bg-ink/5 p-0.5 rounded">
                         <span className="opacity-70">House:</span>
-                        <b className="text-indigo-700">Ravenclaw</b>
+                        <b className="text-indigo-700">{user.house}</b>
                     </div>
                     <div className="flex justify-between items-center group cursor-pointer hover:bg-ink/5 p-0.5 rounded">
                         <span className="opacity-70">Wand:</span>
-                        <b className="truncate max-w-[100px]" title="13' Silicon Core">13" Silicon</b>
+                        <b className="truncate max-w-[100px]" title={user.wand}>{user.wand.split(' ')[0]}</b>
                     </div>
                 </div>
             </div>

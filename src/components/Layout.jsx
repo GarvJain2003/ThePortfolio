@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import DevModeOverlay from './DevModeOverlay';
-import { Code, Terminal } from 'lucide-react';
+import { Code, Terminal, Briefcase, Scroll, Sparkles, Feather } from 'lucide-react';
 
 const Layout = ({ children, sidebar, onNavigate }) => {
     const [isDevMode, setIsDevMode] = useState(false);
@@ -49,15 +49,78 @@ const Layout = ({ children, sidebar, onNavigate }) => {
                         {children}
                     </main>
 
-                    {/* Right Sidebar (Ads/Events - Optional for now) */}
-                    <aside className="hidden lg:block w-64 flex-shrink-0 space-y-4" data-component="AdColumn">
-                        <div className="border border-fb-border bg-white p-3 text-xs">
+                    {/* Right Sidebar (Recruiter Dashboard - Ministry Decree Style) */}
+                    <aside className="hidden lg:block w-64 flex-shrink-0 space-y-4 sticky top-24 h-fit" data-component="RecruiterDashboard">
+                        <div className="bg-[#fcf5e5] border-4 border-double border-ink p-4 shadow-[2px_2px_0px_0px_rgba(0,0,0,0.2)] text-center relative pointer-events-auto transition-transform hover:scale-105 duration-300">
+                            {/* Decorative corners could be added here with pseudos, but keep simple for now */}
+                            <div className="mb-4 border-b-2 border-ink pb-2">
+                                <h4 className="font-headline font-bold text-2xl tracking-widest text-ink uppercase leading-none mb-1">
+                                    Proclamation
+                                </h4>
+                                <p className="font-serif text-[10px] uppercase tracking-widest text-ink/60">
+                                    By Order of the Applicant
+                                </p>
+                            </div>
+
+                            <div className="space-y-4 relative">
+                                {/* Status Seal */}
+                                <div className="absolute -top-12 -right-6 rotate-12 opacity-80">
+                                    <div className="w-16 h-16 rounded-full border-4 border-double border-red-700 bg-red-800/10 flex items-center justify-center shadow-lg transform hover:scale-110 transition-transform">
+                                        <div className="w-12 h-12 border border-red-700 rounded-full flex items-center justify-center">
+                                            <span className="text-[8px] font-bold text-red-900 uppercase text-center leading-none -rotate-12">Hired<br />Approved</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="font-serif text-sm leading-relaxed text-ink/90 italic">
+                                    "Candidate is hereby declared
+                                    <span className="font-bold border-b border-ink/40 mx-1">Open To Work</span>
+                                    and seeks immediate audience."
+                                </div>
+
+                                {/* Quick Actions */}
+                                <div className="space-y-3 pt-2">
+                                    <button
+                                        onClick={() => onNavigate && onNavigate('resume')}
+                                        className="w-full group relative px-4 py-2 border-2 border-ink bg-transparent hover:bg-ink hover:text-[#fcf5e5] transition-colors font-headline font-bold uppercase tracking-wider text-xs"
+                                    >
+                                        <span className="flex items-center justify-center gap-2">
+                                            <Scroll size={14} /> Review Scroll
+                                        </span>
+                                    </button>
+
+                                    <button
+                                        onClick={() => onNavigate && onNavigate('projects')}
+                                        className="w-full group relative px-4 py-2 border-2 border-ink bg-transparent hover:bg-ink hover:text-[#fcf5e5] transition-colors font-headline font-bold uppercase tracking-wider text-xs"
+                                    >
+                                        <span className="flex items-center justify-center gap-2">
+                                            <Sparkles size={14} /> View Magic
+                                        </span>
+                                    </button>
+
+                                    <button
+                                        onClick={() => onNavigate && onNavigate('owl-post')}
+                                        className="w-full group relative px-4 py-2 border-2 border-ink bg-transparent hover:bg-ink hover:text-[#fcf5e5] transition-colors font-headline font-bold uppercase tracking-wider text-xs"
+                                    >
+                                        <span className="flex items-center justify-center gap-2">
+                                            <Feather size={14} /> Send Owl
+                                        </span>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div className="mt-4 pt-2 border-t border-ink/20 text-[10px] font-serif">
+                                Decree No. 2026
+                            </div>
+                        </div>
+
+                        <div className="border border-fb-border bg-white p-3 text-xs opacity-60 hover:opacity-100 transition-opacity">
                             <h4 className="text-fb-blue font-bold mb-2">Sponsored</h4>
                             <div className="space-y-2">
                                 <div className="group cursor-pointer">
-                                    <div className="h-20 bg-ink/10 mb-1 group-hover:bg-ink/20 transition-colors"></div>
-                                    <p className="font-bold text-fb-blue">Oliver's Brooms</p>
-                                    <p>Nimbus 2025 releases soon!</p>
+                                    <div className="h-10 bg-ink/10 mb-1 group-hover:bg-ink/20 transition-colors"></div>
+                                    <p className="font-bold text-fb-blue">Weasley's Wizard Wheezes</p>
+                                    <p>Now hiring Pyrotechnicians!</p>
                                 </div>
                             </div>
                         </div>

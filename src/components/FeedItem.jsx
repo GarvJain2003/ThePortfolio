@@ -23,10 +23,13 @@ const FeedItem = ({ item, onNavigate }) => {
     return (
         <div
             data-component="FeedItem"
-            className={`bg-white border p-4 shadow-sm group mb-4 transition-all ${item.isPinned ? 'border-yellow-500/30 bg-yellow-50/10' : 'border-fb-border'}`}
+            className={`bg-white border p-4 shadow-sm group mb-4 transition-all relative overflow-hidden ${item.isPinned ? 'border-4 border-double border-yellow-600/30 bg-[#fffbf0]' : 'border-fb-border'}`}
         >
+            {/* Pinned visual cue */}
+            {item.isPinned && <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-bl from-yellow-200/20 to-transparent pointer-events-none"></div>}
+
             {/* Post Header */}
-            <div className="flex justify-between items-start mb-3">
+            <div className="flex justify-between items-start mb-3 relative z-10">
                 <div>
                     <h3 className="font-bold text-fb-blue text-sm hover:underline cursor-pointer flex items-center gap-1" onClick={() => onNavigate('profile')}>
                         {item.author}
@@ -38,26 +41,26 @@ const FeedItem = ({ item, onNavigate }) => {
                     </p>
                 </div>
                 {item.title && (
-                    <h2 className="font-headline text-xl font-bold text-ink/80">{item.title}</h2>
+                    <h2 className={`font-headline text-xl font-bold ${item.isPinned ? 'text-yellow-900' : 'text-ink/80'}`}>{item.title}</h2>
                 )}
             </div>
 
             {/* Post Content */}
-            <div className="mb-4">
-                <p className="font-serif text-base leading-relaxed mb-3 text-justify">
+            <div className="mb-4 relative z-10">
+                <p className="font-serif text-base leading-relaxed mb-3 text-justify text-ink/90">
                     {item.content}
                 </p>
 
                 {/* Special Actions for Pinned Post */}
                 {item.actions && (
-                    <div className="flex flex-wrap gap-2 my-4">
+                    <div className="flex flex-wrap gap-3 my-4 justify-center md:justify-start">
                         {item.actions.map((action, idx) => {
                             const Icon = iconMap[action.icon] || Feather;
                             return (
                                 <button
                                     key={idx}
                                     onClick={() => onNavigate(action.action)}
-                                    className="flex items-center gap-2 px-4 py-2 bg-fb-blue/5 border border-fb-blue/20 rounded text-fb-blue font-bold text-xs hover:bg-fb-blue hover:text-white transition-all shadow-sm transform hover:-translate-y-0.5"
+                                    className="flex items-center gap-2 px-5 py-2 bg-[#fffdf5] border border-yellow-600/40 text-yellow-900 font-headline font-bold text-xs uppercase tracking-wider hover:bg-yellow-50 hover:border-yellow-600 hover:shadow-md transition-all transform hover:-translate-y-0.5 rounded-sm"
                                 >
                                     <Icon size={14} /> {action.label}
                                 </button>

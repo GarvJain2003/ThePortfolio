@@ -19,12 +19,6 @@ const Layout = ({ children, sidebar, onNavigate }) => {
                             <span className="opacity-80 hover:opacity-100 cursor-pointer" onClick={() => onNavigate && onNavigate('messages')}>Owls (3)</span>
                         </div>
                         <div className="flex gap-4 items-center">
-                            <button
-                                onClick={() => setIsDevMode(!isDevMode)}
-                                className={`flex items-center gap-1 px-2 py-0.5 rounded transition-colors ${isDevMode ? 'bg-green-500 text-black animate-pulse' : 'hover:bg-white/10 opacity-80'}`}
-                            >
-                                <Terminal size={12} /> {isDevMode ? 'DEV_MODE: ON' : 'Dev Mode'}
-                            </button>
                             <span className="opacity-80 hover:opacity-100 cursor-pointer" onClick={() => onNavigate && onNavigate('profile')}>Account Settings</span>
                             <span className="opacity-80 hover:opacity-100 cursor-pointer" onClick={() => alert("Logout spell cast! (Mock)")}>Logout</span>
                         </div>
@@ -74,6 +68,23 @@ const Layout = ({ children, sidebar, onNavigate }) => {
                 <footer className="text-center p-4 text-xs text-ink/60 border-t border-ink/20 mt-8">
                     The Social Prophet &copy; 2026 • A Meta-Magical Production
                 </footer>
+
+                {/* Dev Mode Floating Action Button */}
+                <button
+                    onClick={() => setIsDevMode(!isDevMode)}
+                    className={`fixed bottom-6 right-6 z-[100] w-14 h-14 rounded-full shadow-xl flex items-center justify-center border-2 transition-all duration-300 transform hover:scale-110 active:scale-95 ${isDevMode
+                        ? 'bg-black border-green-500 text-green-500 shadow-[0_0_20px_rgba(34,197,94,0.5)]'
+                        : 'bg-white border-fb-blue text-fb-blue hover:bg-fb-blue hover:text-white'
+                        }`}
+                    title="Toggle Developer Mode"
+                >
+                    <Terminal size={24} className={isDevMode ? 'animate-pulse' : ''} />
+                    {isDevMode && (
+                        <span className="absolute -top-10 right-0 bg-black text-green-500 text-[10px] px-2 py-1 rounded border border-green-500 font-mono whitespace-nowrap">
+                            DEV MODE ACTIVE
+                        </span>
+                    )}
+                </button>
             </div>
         </DevModeOverlay>
     );

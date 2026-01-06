@@ -56,9 +56,10 @@
 }
 
 @media print {
+
   /* Hide overall layout elements */
-  aside, 
-  nav, 
+  aside,
+  nav,
   [role="banner"],
   .fixed,
   button {
@@ -77,14 +78,15 @@
   .grid {
     display: block !important;
   }
-  
+
   .md\:col-span-12 {
-     width: 100% !important;
+    width: 100% !important;
   }
 
-  .md\:col-span-4, .md\:col-span-8 {
-     width: 100% !important;
-     margin-bottom: 2rem;
+  .md\:col-span-4,
+  .md\:col-span-8 {
+    width: 100% !important;
+    margin-bottom: 2rem;
   }
 
   /* Clean up background for ink saving */

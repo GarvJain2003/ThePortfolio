@@ -7,21 +7,24 @@ const Sidebar = ({ onNavigate }) => {
         <div className="space-y-6">
             {/* Profile Card */}
             <div className="border border-ink/40 bg-paper p-2 shadow-[2px_2px_0px_0px_rgba(0,0,0,0.8)]">
-                <div className="relative group/profile cursor-pointer" onClick={() => onNavigate('profile')}>
-                    <div className="w-24 h-24 mx-auto border-4 border-double border-ink rounded-full overflow-hidden relative shadow-lg group-hover/profile:shadow-[0_0_15px_rgba(59,130,246,0.6)] transition-all duration-500">
-                        <img src="/profile.png" className="w-full h-full object-cover group-hover/profile:scale-110 group-hover/profile:sepia-[.3] transition-transform duration-700" alt="Profile" />
-
-                        {/* Magical Mist overlay */}
-                        <div className="absolute inset-0 bg-indigo-500/0 group-hover/profile:bg-indigo-500/10 transition-colors duration-500"></div>
-                    </div>
-
-                    {/* Floating Sorting Hat Overlay */}
-                    <div className="absolute -top-6 left-1/2 transform -translate-x-1/2 opacity-0 group-hover/profile:opacity-100 transition-all duration-500 group-hover/profile:-translate-y-2 pointer-events-none drop-shadow-2xl z-20">
+                <div className="relative group/profile cursor-pointer w-24 h-24 mx-auto" onClick={() => onNavigate('profile')}>
+                    <div className="w-full h-full border-4 border-double border-ink rounded-full overflow-hidden relative shadow-lg group-hover/profile:shadow-[0_0_20px_rgba(147,51,234,0.6)] transition-all duration-500">
+                        {/* Normal Profile (Fades Out) */}
                         <img
-                            src="https://cdn-icons-png.flaticon.com/512/10609/10609657.png"
-                            alt="Sorting Hat"
-                            className="w-16 h-16 drop-shadow-md filter brightness-75 contrast-125"
+                            src="/profile.png"
+                            className="absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ease-in-out group-hover/profile:opacity-0"
+                            alt="Muggle Profile"
                         />
+
+                        {/* Wizard Profile (Fades In) */}
+                        <img
+                            src="/wizard_profile.png"
+                            className="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-700 ease-in-out group-hover/profile:opacity-100 scale-110"
+                            alt="Wizard Profile"
+                        />
+
+                        {/* Magical Sparkles/Mist overlay */}
+                        <div className="absolute inset-0 bg-purple-500/0 group-hover/profile:bg-purple-500/10 transition-colors duration-500 mix-blend-overlay"></div>
                     </div>
                 </div>
                 <h3 className="font-headline font-bold text-xl text-center border-b border-ink/20 pb-1 mb-2">Garv Jain</h3>

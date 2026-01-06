@@ -54,3 +54,48 @@
 ::-webkit-scrollbar-thumb:hover {
   background-color: color-mix(in srgb, var(--color-ink) 40%, transparent);
 }
+
+@media print {
+  /* Hide overall layout elements */
+  aside, 
+  nav, 
+  [role="banner"],
+  .fixed,
+  button {
+    display: none !important;
+  }
+
+  /* Reset main container */
+  main {
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+    max-width: none !important;
+  }
+
+  /* Ensure Resume View is full width */
+  .grid {
+    display: block !important;
+  }
+  
+  .md\:col-span-12 {
+     width: 100% !important;
+  }
+
+  .md\:col-span-4, .md\:col-span-8 {
+     width: 100% !important;
+     margin-bottom: 2rem;
+  }
+
+  /* Clean up background for ink saving */
+  body {
+    background: white !important;
+    background-image: none !important;
+    color: black !important;
+  }
+
+  /* Hide decorative gradients */
+  .bg-gradient-to-r {
+    display: none !important;
+  }
+}

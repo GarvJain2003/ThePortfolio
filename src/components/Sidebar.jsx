@@ -1,6 +1,8 @@
 import { User, Users, Image, Coffee, Scroll, BookOpen, Shield, Feather, Sparkles } from 'lucide-react';
+import { useOutcome } from '../context/OutcomeContext';
 
 const Sidebar = ({ onNavigate }) => {
+    const { user } = useOutcome();
     return (
         <div className="space-y-6">
             {/* Profile Card */}

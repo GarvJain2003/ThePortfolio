@@ -7,8 +7,8 @@ const Sidebar = ({ onNavigate }) => {
         <div className="space-y-6">
             {/* Profile Card */}
             <div className="border border-ink/40 bg-paper p-2 shadow-[2px_2px_0px_0px_rgba(0,0,0,0.8)]">
-                <div className="relative group/profile cursor-pointer w-24 h-24 mx-auto" onClick={() => onNavigate('profile')}>
-                    <div className="w-full h-full border-4 border-double border-ink rounded-full overflow-hidden relative shadow-lg group-hover/profile:shadow-[0_0_20px_rgba(147,51,234,0.6)] transition-all duration-500">
+                <div className="relative group/profile cursor-pointer w-32 h-32 mx-auto mb-4" onClick={() => onNavigate('profile')}>
+                    <div className="w-full h-full border-4 border-double border-ink rounded-full overflow-hidden relative shadow-xl group-hover/profile:shadow-[0_0_25px_rgba(147,51,234,0.8)] transition-all duration-500 bg-ink">
                         {/* Normal Profile (Fades Out) */}
                         <img
                             src="/profile.png"
@@ -24,7 +24,12 @@ const Sidebar = ({ onNavigate }) => {
                         />
 
                         {/* Magical Sparkles/Mist overlay */}
-                        <div className="absolute inset-0 bg-purple-500/0 group-hover/profile:bg-purple-500/10 transition-colors duration-500 mix-blend-overlay"></div>
+                        <div className="absolute inset-0 bg-purple-500/0 group-hover/profile:bg-purple-500/20 transition-colors duration-500 mix-blend-overlay"></div>
+                    </div>
+
+                    {/* "Hover Argument" Tooltip */}
+                    <div className="absolute -bottom-3 left-1/2 transform -translate-x-1/2 bg-ink text-[#fcf5e5] text-[10px] font-bold px-3 py-1 rounded-full border border-[#fcf5e5] shadow-lg opacity-80 group-hover/profile:opacity-0 transition-opacity duration-300 pointer-events-none whitespace-nowrap z-20">
+                        ✨ Hover to Reveal
                     </div>
                 </div>
                 <h3 className="font-headline font-bold text-xl text-center border-b border-ink/20 pb-1 mb-2">Garv Jain</h3>

@@ -21,52 +21,55 @@ export const OutcomeProvider = ({ children }) => {
             id: 0,
             author: "Garv Jain",
             time: "Pinned Post",
-            title: "Welcome, Talent Scout!",
-            content: "If you are reading this, you are probably looking for a sign to hire me. Consider this it! 🪄 I've built this interface to demonstrate my frontend skills. Feel free to explore, or use the quick links below.",
+            title: "To the Recruiter Reviewing This...",
+            content: "I've built this 'TheSocialProphet' interface to demonstrate my ability to ship complex, polished, and interactive front-end experiences. I am ready to bring this same attention to detail to Meta's products. 🚀",
             image: null,
-            likes: 999,
+            likes: 124,
             comments: [
-                { id: 999, author: "The Sorting Hat", text: "I sense a strong work ethic and a sharp mind. Definitely a hire!", time: "Ancient times" }
+                { id: 999, author: "Mark Z.", text: "The design system is strong with this one.", time: "Just now" }
             ],
             liked: true,
             isPinned: true,
             actions: [
                 { label: "View Resume", action: "resume", icon: "Scroll" },
                 { label: "See Projects", action: "projects", icon: "Sparkles" },
-                { label: "Contact Me", action: "owl-post", icon: "Feather" }
+                { label: "Email Me", action: "owl-post", icon: "Feather" }
             ]
         },
         {
             id: 1,
             author: "Garv Jain",
             time: "2 hours ago",
-            title: "Project: The Social Network (Magical Ed.)",
-            content: "Just finished brewing a new react application. It mimics the old ways of communication but with a magical twist. Check out the source scroll below!",
-            image: "https://images.unsplash.com/photo-1633409361618-c73427e4e206?q=80&w=800&auto=format&fit=crop",
-            likes: 42,
+            title: "Scaling Shatranj ♟️",
+            content: "Just checked the logs—Shatranj (my WebRTC chess app) hit 3.3K+ weekly reads! 📈 Scaling peer-to-peer video connections while maintaining low-latency board state sync was a challenge, but Firebase signaling is holding up beautifully.",
+            image: "https://images.unsplash.com/photo-1529699211952-734e80c4d42b?q=80&w=1000&auto=format&fit=crop",
+            likes: 89,
             comments: [
-                { id: 101, author: "Hermione G.", text: "Brilliant use of the grids!", time: "1 hour ago" }
+                { id: 101, author: "Ron Weasley", text: "Still haven't beaten the AI level 5...", time: "1 hour ago" }
             ],
             liked: false
         },
         {
             id: 2,
-            author: "Albus D.",
-            time: "4 hours ago",
-            title: "3 Tips for Better React Hooks",
-            content: "One must not simply depend on dependencies. Understanding the lifecycle is key to mastering the useEffect charm.",
-            likes: 150,
-            comments: [],
+            author: "Garv Jain",
+            time: "Yesterday",
+            title: "Deployment Successful 🚀",
+            content: "The new Recruitment Portal for E-Cell is live. Processed 344+ applicants in the first 48 hours. Firestore security rules: Locked down. Performance: Optimized (40% faster load).",
+            image: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=1000&auto=format&fit=crop", // Coding laptop
+            likes: 156,
+            comments: [
+                { id: 102, author: "E-Cell Team", text: "The automated scoring saved us hours!", time: "5 hours ago" }
+            ],
             liked: true
         },
         {
             id: 3,
             author: "Garv Jain",
-            time: "Yesterday",
-            title: "Refactoring: The Dark Arts",
-            content: "Sometimes looking at legacy code feels like staring into a Dementor's hood. But with the Patronus of a good linter, all things are possible.",
-            image: "https://images.unsplash.com/photo-1555680202-c86f0e12f086?q=80&w=800&auto=format&fit=crop",
-            likes: 89,
+            time: "2 days ago",
+            title: "Learning the Dark Arts (Networking)",
+            content: "Deep diving into WebRTC protocols today. Implementing STUN/TURN servers feels like practicing non-verbal spells—tricky, but powerful when it clicks. ⚡",
+            image: null,
+            likes: 45,
             comments: [],
             liked: false
         }

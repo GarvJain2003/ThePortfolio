@@ -1,6 +1,7 @@
-```javascript
-import React, { useState, useEffect, useMemo } from 'react';
+
+import React, { useRef, useLayoutEffect, useState } from 'react';
 import { Scroll, Star, Award, Book, Feather, Briefcase, Wand2 } from 'lucide-react';
+import gsap from 'gsap';
 
 // Magical Descriptions for Skills
 const skillDescriptions = {
@@ -17,55 +18,128 @@ const skillDescriptions = {
 };
 
 const ResumeView = () => {
+    const containerRef = useRef(null);
     const [isSpellCast, setIsSpellCast] = useState(false);
-    const [mounted, setMounted] = useState(false);
+    const timeline = useRef(null);
 
-    // Trigger animation readiness after mount
-    useEffect(() => {
-        setMounted(true);
+    // Initial Chaos Setup
+    useLayoutEffect(() => {
+        const ctx = gsap.context(() => {
+            // Scatter Skills
+            gsap.set(".skill-item", {
+                x: () => Math.random() * 400 - 200,
+                y: () => Math.random() * 400 - 200,
+                rotation: () => Math.random() * 360 - 180,
+                opacity: 0.6,
+                scale: () => 0.8 + Math.random() * 0.4
+            });
+
+            // Tilt Sections
+            gsap.set(".section-card", {
+                rotation: () => Math.random() * 6 - 3,
+                y: () => Math.random() * 20 - 10,
+                opacity: 0.8
+            });
+
+            // Initial blur for header
+            gsap.set(".resume-header", {
+                filter: "blur(1px) grayscale(50%)"
+            });
+
+        }, containerRef);
+        return () => ctx.revert();
     }, []);
 
     const castSpell = () => {
+        if (isSpellCast) return;
         setIsSpellCast(true);
-    };
 
-    // Helper to generate stable random positions
-    const generateRandomPos = () => {
-        const x = Math.floor(Math.random() * 200 - 100); // -100 to 100
-        const y = Math.floor(Math.random() * 200 - 100); // -100 to 100
-        const r = Math.floor(Math.random() * 360);
-        return { transform: `translate(${ x }px, ${ y }px) rotate(${ r }deg)` };
-    };
+        // Play Sound Effect
+        const audio = new Audio('https://assets.mixkit.co/active_storage/sfx/1435/1435-preview.mp3'); // Magic Chime
+        audio.volume = 0.5;
+        audio.play().catch(e => console.log('Audio play failed (user interaction needed first):', e));
 
-    // Skills data wrapping
-    const skillsData = useMemo(() => ({
-        languages: ['JavaScript', 'C++', 'Python', 'R', 'SQL', 'Git', 'Docker'].map(s => ({ name: s, style: generateRandomPos() })),
-        fullstack: ['React.js', 'Firebase', 'WebRTC', 'GCP', 'Node.js', 'Express', 'Tailwind'].map(s => ({ name: s, style: generateRandomPos() })),
-        certs: ['Google IT Support', 'Google Cloud Foundations', 'Google Data Analytics'].map(s => ({ name: s, style: generateRandomPos() }))
-    }), []);
+        const ctx = gsap.context(() => {
+            const tl = gsap.timeline();
+
+            // 1. Swish and Flick (Incantation)
+            tl.to(".incantation-text", {
+                duration: 1.5,
+                opacity: 1,
+                scale: 1.2,
+                ease: "power2.out",
+                yoyo: true,
+                repeat: 1
+            })
+
+                // 2. Levitate (Everything floats up slightly)
+                .to([".skill-item", ".section-card"], {
+                    duration: 1,
+                    y: "-=50", // Float up
+                    rotation: "+=5", // Gentle twist
+                    ease: "sine.inOut",
+                    stagger: { amount: 0.5, from: "random" }
+                }, "<0.2")
+
+                // 3. The Correction (Snap to grid)
+                .to([".skill-item", ".section-card"], {
+                    duration: 1.2,
+                    x: 0,
+                    y: 0,
+                    rotation: 0,
+                    scale: 1,
+                    opacity: 1,
+                    ease: "elastic.out(1, 0.5)",
+                    stagger: {
+                        amount: 0.5,
+                        from: "center"
+                    }
+                }, "-=0.5")
+
+                // 4. Reveal Text
+                .to(".resume-header", {
+                    filter: "blur(0px) grayscale(0%)",
+                    duration: 1
+                }, "<");
+
+        }, containerRef);
+    };
 
     return (
-        <div className="space-y-6 animate-in fade-in duration-500 pb-10 print:pb-0 print:animate-none relative">
-            
-            {/* Wand Button - Floating Action */}
+        <div ref={containerRef} className="space-y-6 pb-10 print:pb-0 relative resume-container">
+
+            {/* Procedural CSS Wand & Incantation */}
+            {/* Procedural CSS Wand & Incantation */}
             {!isSpellCast && (
-                <div className="absolute top-4 right-4 z-50 animate-bounce print:hidden">
-                    <button 
-                        onClick={castSpell}
-                        className="bg-purple-600 text-white p-3 rounded-full shadow-[0_0_15px_rgba(147,51,234,0.5)] hover:bg-purple-700 hover:scale-110 transition-all group flex items-center gap-2"
-                        title="Cast 'Orchideous' to organize!"
-                    >
-                        <Wand2 className="w-6 h-6 group-hover:rotate-12 transition-transform" />
-                        <span className="font-headline font-bold pr-2">Organize!</span>
-                    </button>
-                    <div className="absolute top-full mt-2 right-0 text-xs bg-ink/80 text-white px-2 py-1 rounded w-32 text-center">
-                        The resume is in chaos! Cast a spell!
+                <div className="fixed bottom-6 right-6 z-[100] animate-pulse-slow cursor-pointer group print:hidden"
+                    onClick={castSpell}
+                    title="Cast 'Wingardium Leviosa' to organize!">
+
+                    {/* CSS Wand Icon (Miniaturized) */}
+                    <div className="wand-icon-wrapper relative w-16 h-16 bg-white/10 backdrop-blur-sm rounded-full border border-white/20 shadow-lg flex items-center justify-center transition-transform hover:scale-110 hover:rotate-12 hover:bg-white/20">
+                        {/* Mini CSS Wand */}
+                        <div className="relative w-10 h-1 bg-gradient-to-r from-amber-900 via-amber-700 to-amber-200 rounded-full shadow-sm flex items-center -rotate-45">
+                            {/* Handle */}
+                            <div className="absolute left-0 w-3 h-1.5 bg-gradient-to-r from-amber-950 to-amber-800 rounded-l-full"></div>
+                            {/* Tip Glow */}
+                            <div className="absolute right-0 w-1.5 h-1.5 bg-purple-400 rounded-full blur-[1px] opacity-80 group-hover:opacity-100 group-hover:scale-150 transition-all duration-300"></div>
+                        </div>
                     </div>
                 </div>
             )}
 
+            {/* Visual Incantation Text */}
+            <div className="incantation-text fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-5xl md:text-8xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-amber-100 via-purple-300 to-amber-100 opacity-0 pointer-events-none z-[100] text-center whitespace-nowrap tracking-wider drop-shadow-2xl"
+                style={{
+                    fontFamily: '"Cinzel Decorative", cursive',
+                    textShadow: '0 0 20px rgba(168, 85, 247, 0.8), 0 0 40px rgba(234, 179, 8, 0.6)',
+                    filter: 'drop-shadow(0 0 10px rgba(255,255,255,0.5))'
+                }}>
+                Wingardium Leviosa!
+            </div>
+
             {/* Header / Title */}
-            <div className={`bg - paper border border - ink / 20 p - 8 shadow - md relative overflow - hidden group print: border - none print: shadow - none print: p - 0 print: mb - 6 transition - all duration - 1000 ${ isSpellCast ? '' : 'blur-[1px] grayscale-[50%]' } `}>
+            <div className="resume-header bg-paper border border-ink/20 p-8 shadow-md relative overflow-hidden group print:border-none print:shadow-none print:p-0 print:mb-6">
                 <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-ink/40 to-transparent print:hidden"></div>
                 <div className="text-center">
                     <h1 className="font-headline text-4xl mb-2 tracking-wider text-ink/90">Curriculum Vitae</h1>
@@ -75,7 +149,7 @@ const ResumeView = () => {
                         <span className="flex items-center gap-1"><Star size={12} /> BE (2026)</span>
                         <span className="flex items-center gap-1"><Feather size={12} /> CGPA: 8.01</span>
                     </div>
-                     <div className="flex justify-center gap-4 mt-2 text-xs text-ink/70 print:text-black">
+                    <div className="flex justify-center gap-4 mt-2 text-xs text-ink/70 print:text-black">
                         <a href="mailto:garvjain2003@gmail.com" className="hover:text-fb-blue hover:underline">garvjain2003@gmail.com</a>
                         <span className="print:mx-2">•</span>
                         <a href="https://linkedin.com/in/garv-jain-1466721ba" target="_blank" rel="noopener noreferrer" className="hover:text-fb-blue hover:underline">LinkedIn</a>
@@ -95,7 +169,7 @@ const ResumeView = () => {
 
                 {/* Left Column: Skills & Education */}
                 <div className="md:col-span-4 space-y-6 print:w-full print:mb-6">
-                    <div className={`bg - white border border - fb - border p - 4 shadow - sm relative print: border - none print: shadow - none print: p - 0 transition - all duration - 1000 ${ isSpellCast ? '' : 'rotate-1' } `}>
+                    <div className="section-card bg-white border border-fb-border p-4 shadow-sm relative print:border-none print:shadow-none print:p-0">
                         <h3 className="font-headline text-xl text-fb-blue mb-4 border-b border-fb-border pb-2 flex items-center gap-2 print:text-black print:border-black">
                             <Star size={18} /> Technical Skills
                         </h3>
@@ -104,18 +178,17 @@ const ResumeView = () => {
                             <div>
                                 <h4 className="font-bold text-xs uppercase tracking-wider text-ink/50 mb-2 print:text-black">Languages & Tools</h4>
                                 <div className="flex flex-wrap gap-2 relative min-h-[50px]">
-                                    {skillsData.languages.map((skill) => (
-                                        <div 
-                                            key={skill.name} 
-                                            className={`group relative cursor - help transition - all duration - 1000 ease - [cubic - bezier(0.34, 1.56, 0.64, 1)]`}
-                                            style={isSpellCast || !mounted ? {} : { ...skill.style, position: 'absolute', opacity: 0.6 }}
+                                    {['JavaScript', 'C++', 'Python', 'R', 'SQL', 'Git', 'Docker'].map((skill) => (
+                                        <div
+                                            key={skill}
+                                            className="skill-item group relative cursor-help"
                                         >
                                             <span className="bg-fb-blue/5 text-fb-blue text-xs px-2 py-1 rounded border border-fb-blue/10 hover:bg-fb-blue hover:text-white transition-colors print:bg-transparent print:text-black print:border-gray-300 block">
-                                                {skill.name}
+                                                {skill}
                                             </span>
-                                            {skillDescriptions[skill.name] && isSpellCast && (
+                                            {skillDescriptions[skill] && isSpellCast && (
                                                 <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-48 bg-ink text-[#fcf5e5] text-[10px] p-2 rounded shadow-lg opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10 print:hidden text-center">
-                                                    {skillDescriptions[skill.name]}
+                                                    {skillDescriptions[skill]}
                                                     <div className="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-ink"></div>
                                                 </div>
                                             )}
@@ -127,18 +200,17 @@ const ResumeView = () => {
                             <div>
                                 <h4 className="font-bold text-xs uppercase tracking-wider text-ink/50 mb-2 print:text-black">Full Stack & Cloud</h4>
                                 <div className="flex flex-wrap gap-2 relative min-h-[50px]">
-                                    {skillsData.fullstack.map((skill) => (
-                                         <div 
-                                            key={skill.name} 
-                                            className={`group relative cursor - help transition - all duration - 1000 ease - [cubic - bezier(0.34, 1.56, 0.64, 1)]`}
-                                            style={isSpellCast || !mounted ? {} : { ...skill.style, position: 'absolute', opacity: 0.6 }}
+                                    {['React.js', 'Firebase', 'WebRTC', 'GCP', 'Node.js', 'Express', 'Tailwind'].map((skill) => (
+                                        <div
+                                            key={skill}
+                                            className="skill-item group relative cursor-help"
                                         >
                                             <span className="bg-green-900/5 text-green-900 text-xs px-2 py-1 rounded border border-green-900/10 hover:bg-green-900 hover:text-white transition-colors print:bg-transparent print:text-black print:border-gray-300 block">
-                                                {skill.name}
+                                                {skill}
                                             </span>
-                                            {skillDescriptions[skill.name] && isSpellCast && (
+                                            {skillDescriptions[skill] && isSpellCast && (
                                                 <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-48 bg-ink text-[#fcf5e5] text-[10px] p-2 rounded shadow-lg opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10 print:hidden text-center">
-                                                    {skillDescriptions[skill.name]}
+                                                    {skillDescriptions[skill]}
                                                     <div className="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-ink"></div>
                                                 </div>
                                             )}
@@ -149,16 +221,16 @@ const ResumeView = () => {
 
                             <div>
                                 <h4 className="font-bold text-xs uppercase tracking-wider text-ink/50 mb-2 print:text-black">Certifications</h4>
-                                <ul className={`text - xs list - disc list - inside text - ink / 80 space - y - 1 print: text - black transition - all duration - 1000 ${ isSpellCast ? '' : 'blur-sm translate-y-4' } `}>
-                                    {skillsData.certs.map(c => (
-                                        <li key={c.name}>{c.name}</li>
+                                <ul className="text-xs list-disc list-inside text-ink/80 space-y-1 print:text-black">
+                                    {['Google IT Support', 'Google Cloud Foundations', 'Google Data Analytics'].map(c => (
+                                        <li key={c}>{c}</li>
                                     ))}
                                 </ul>
                             </div>
                         </div>
                     </div>
 
-                     <div className={`bg - white border border - fb - border p - 6 shadow - sm print: border - none print: shadow - none print: p - 0 print: mt - 6 transition - all duration - 1000 delay - 100 ${ isSpellCast ? '' : '-rotate-1 translate-y-2' } `}>
+                    <div className="section-card bg-white border border-fb-border p-6 shadow-sm print:border-none print:shadow-none print:p-0 print:mt-6">
                         <h3 className="font-headline text-xl text-fb-blue mb-6 border-b border-fb-border pb-2 flex items-center gap-2 print:text-black print:border-black">
                             <Book size={18} /> Education
                         </h3>
@@ -176,7 +248,7 @@ const ResumeView = () => {
 
                 {/* Right Column: Projects & Leadership */}
                 <div className="md:col-span-8 space-y-6 print:w-full">
-                    <div className={`bg - white border border - fb - border p - 6 shadow - sm print: border - none print: shadow - none print: p - 0 transition - all duration - 1000 delay - 200 ${ isSpellCast ? '' : 'rotate-1 translate-x-2' } `}>
+                    <div className="section-card bg-white border border-fb-border p-6 shadow-sm print:border-none print:shadow-none print:p-0">
                         <h3 className="font-headline text-xl text-fb-blue mb-6 border-b border-fb-border pb-2 flex items-center gap-2 print:text-black print:border-black">
                             <Briefcase size={18} /> Key Projects
                         </h3>
@@ -211,7 +283,7 @@ const ResumeView = () => {
                                 </ul>
                             </div>
 
-                             {/* Project 3: AI/ML Dashboard */}
+                            {/* Project 3: AI/ML Dashboard */}
                             <div className="relative pl-4 border-l-2 border-fb-border print:border-l-gray-300">
                                 <div className="absolute -left-[5px] top-0 w-2 h-2 bg-fb-blue/30 rounded-full print:bg-black"></div>
                                 <h4 className="font-bold text-lg text-ink/90 print:text-black">AI/ML Dashboard + CNN Model</h4>
@@ -224,12 +296,12 @@ const ResumeView = () => {
                         </div>
                     </div>
 
-                    <div className={`bg - white border border - fb - border p - 6 shadow - sm print: border - none print: shadow - none print: p - 0 print: mt - 6 transition - all duration - 1000 delay - 300 ${ isSpellCast ? '' : '-rotate-1 translate-y-4' } `}>
+                    <div className="section-card bg-white border border-fb-border p-6 shadow-sm print:border-none print:shadow-none print:p-0 print:mt-6">
                         <h3 className="font-headline text-xl text-fb-blue mb-6 border-b border-fb-border pb-2 flex items-center gap-2 print:text-black print:border-black">
                             <Award size={18} /> Leadership & Responsibility
                         </h3>
-                         <div className="space-y-6">
-                             {/* Position 1 */}
+                        <div className="space-y-6">
+                            {/* Position 1 */}
                             <div className="relative pl-4 border-l-2 border-fb-border print:border-l-gray-300">
                                 <div className="absolute -left-[5px] top-0 w-2 h-2 bg-red-800 rounded-full print:bg-black"></div>
                                 <h4 className="font-bold text-sm text-ink/90 flex items-center gap-2 print:text-black">
@@ -243,7 +315,7 @@ const ResumeView = () => {
                             </div>
 
                             {/* Position 2 */}
-                             <div className="relative pl-4 border-l-2 border-fb-border print:border-l-gray-300">
+                            <div className="relative pl-4 border-l-2 border-fb-border print:border-l-gray-300">
                                 <div className="absolute -left-[5px] top-0 w-2 h-2 bg-yellow-600 rounded-full print:bg-black"></div>
                                 <h4 className="font-bold text-sm text-ink/90 flex items-center gap-2 print:text-black">
                                     Startup Head — E-Cell, IET DAVV
@@ -258,7 +330,7 @@ const ResumeView = () => {
                     </div>
                 </div>
             </div>
-            
+
             <div className="text-center print:hidden">
                 <button
                     onClick={() => window.print()}

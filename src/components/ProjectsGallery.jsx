@@ -1,111 +1,171 @@
-import React from 'react';
-import { ExternalLink, Github, Code, Sparkles, BookOpen } from 'lucide-react';
+import React, { useState } from 'react';
+import { ExternalLink, Github, Sparkles, BookOpen, Wand2, FlaskConical } from 'lucide-react';
 
 const ProjectsGallery = () => {
+    const [castSpell, setCastSpell] = useState(null);
+
     const projects = [
         {
             id: 1,
             title: "Shatranj (Wizard's Chess)",
-            description: "A fully interactive chess experience inspired by the classic wizarding game. Features include move validation, checkmate detection, and a touch of magical animations.",
-            image: "https://images.unsplash.com/photo-1529699211952-734e80c4d42b?q=80&w=1000&auto=format&fit=crop",
-            tags: ["React", "Chess.js", "DnD Kit"],
-            link: "#", // Placeholder
-            github: "#" // Placeholder
+            description: "A cloud-native multiplayer chess platform featuring real-time peer-to-peer video chat (WebRTC), offline board connectivity, and AI opponents. Scaled to 3.3K+ weekly reads.",
+            image: "https://images.unsplash.com/photo-1586165368502-1bad197a6461?q=80&w=1258&auto=format&fit=crop", // Chess board
+            tags: ["React", "Firebase", "WebRTC", "Chess.js", "Tailwind"],
+            link: "https://playshatranj.com",
+            github: "https://github.com/GarvJain2003"
         },
         {
             id: 2,
-            title: "Recruitment SaaS",
-            description: "An automated recruitment platform designed to streamline the hiring process. Think of it as a magical quill that filters candidates and schedules owls automatically.",
-            image: "https://images.unsplash.com/photo-1586281380349-632531db7ed4?q=80&w=1000&auto=format&fit=crop",
-            tags: ["Next.js", "Supabase", "Tailwind"],
+            title: "Recruitment Portal",
+            description: "An automated evaluation system for university club recruitment. Features real-time Firestore scoring, CSV exports, and client-side image compression. Note: Internal tool.",
+            image: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1170&auto=format&fit=crop", // Digital/Tech abstract
+            tags: ["JavaScript", "Firebase", "Canvas API"],
             link: "#",
-            github: "#"
+            github: "https://github.com/GarvJain2003"
         },
         {
             id: 3,
-            title: "Sorting Hat AI",
-            description: "An AI-powered personality analyzer that sorts users into their rightful houses based on their digital footprint and writing style.",
-            image: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=1000&auto=format&fit=crop",
-            tags: ["OpenAI API", "Node.js", "Express"],
+            title: "Sortable AI & ML Dashboard",
+            description: "Interactive Python dashboard visualizing custom-trained CNN models (MNIST) and classical regression algorithms. Bridges the gap between raw data and visual magic.",
+            image: "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?q=80&w=1065&auto=format&fit=crop", // AI/Brain
+            tags: ["Python", "TensorFlow", "OpenCV", "Tkinter"],
             link: "#",
-            github: "#"
+            github: "https://github.com/GarvJain2003"
         }
     ];
+
+    const handleCastSpell = (id) => {
+        setCastSpell(id);
+        setTimeout(() => setCastSpell(null), 2000); // 2s Spell duration
+    };
 
     return (
         <div className="space-y-6 animate-in fade-in duration-500 pb-10">
             {/* Header */}
-            <div className="bg-paper border border-ink/20 p-6 shadow-md relative overflow-hidden">
-                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-fb-blue/60 to-transparent"></div>
-                <div className="flex items-center gap-4">
-                    <div className="bg-fb-blue/10 p-3 rounded-full border border-fb-blue/20">
+            <div className="bg-paper border border-ink/20 p-6 shadow-md relative overflow-hidden group">
+                {/* Mystical Background */}
+                <div className="absolute inset-0 bg-gradient-to-r from-purple-900/10 via-fb-blue/20 to-purple-900/10 opacity-50 group-hover:opacity-80 transition-opacity duration-1000"></div>
+                <div className="absolute -top-10 -right-10 w-40 h-40 bg-purple-500/20 rounded-full blur-3xl animate-pulse"></div>
+
+                <div className="relative flex items-center gap-4 z-10">
+                    <div className="bg-white/80 p-3 rounded-full border-2 border-fb-blue/20 shadow-[0_0_15px_rgba(59,130,246,0.3)]">
                         <Sparkles className="text-fb-blue" size={24} />
                     </div>
                     <div>
-                        <h1 className="font-headline text-3xl text-ink/90">Department of Magical Projects</h1>
-                        <p className="font-serif italic text-ink/60">"Artifacts of code and creativity"</p>
+                        <h1 className="font-headline text-3xl text-ink/90 flex items-center gap-2">
+                            Department of Magical Projects
+                        </h1>
+                        <p className="font-serif italic text-ink/60 flex items-center gap-2">
+                            "Artifacts of code and creativity" <Wand2 size={12} className="text-purple-600" />
+                        </p>
                     </div>
                 </div>
             </div>
 
             {/* Gallery Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 {projects.map((project) => (
-                    <div key={project.id} className="group bg-white border border-fb-border hover:border-fb-blue/50 transition-all duration-300 shadow-sm hover:shadow-md rounded-sm overflow-hidden flex flex-col">
-                        {/* Project Image */}
-                        <div className="h-48 overflow-hidden relative border-b border-fb-border">
+                    <div
+                        key={project.id}
+                        className="group relative bg-white border border-fb-border hover:border-purple-400 transition-all duration-500 shadow-sm hover:shadow-[0_10px_40px_-10px_rgba(147,51,234,0.3)] rounded-lg overflow-hidden flex flex-col hover:-translate-y-2"
+                    >
+                        {/* Project Image Container */}
+                        <div
+                            className="h-56 overflow-hidden relative border-b border-fb-border cursor-pointer"
+                            onClick={() => handleCastSpell(project.id)}
+                        >
                             <img
                                 src={project.image}
                                 alt={project.title}
-                                className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700 sepia-[.2] group-hover:sepia-0"
+                                className={`w-full h-full object-cover transform transition-transform duration-1000 ${castSpell === project.id ? 'scale-110 blur-sm brightness-125' : 'group-hover:scale-105 group-hover:sepia-0 sepia-[.2]'}`}
                             />
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end justify-between p-3">
-                                <span className="text-white text-xs font-bold px-2 py-1 bg-black/40 backdrop-blur-sm rounded border border-white/20">
-                                    View Artifact
+
+                            {/* "Spell Cast" Overlay Effect */}
+                            <div className={`absolute inset-0 bg-purple-600/30 mix-blend-overlay transition-opacity duration-300 ${castSpell === project.id ? 'opacity-100' : 'opacity-0'}`}></div>
+
+                            {/* Hover Reveal Text */}
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-4">
+                                <span className="text-[#fcf5e5] font-headline font-bold uppercase tracking-widest text-xs border border-[#fcf5e5]/50 px-3 py-1 rounded backdrop-blur-sm flex items-center gap-2">
+                                    <Sparkles size={12} /> Click to Cast Revelio
                                 </span>
                             </div>
+
+                            {/* Flash Effect on Click */}
+                            {castSpell === project.id && (
+                                <div className="absolute inset-0 bg-white animate-fadeOut z-20 pointer-events-none"></div>
+                            )}
                         </div>
 
                         {/* Content */}
-                        <div className="p-4 flex-1 flex flex-col">
-                            <h3 className="font-headline text-xl text-fb-blue font-bold mb-2 group-hover:underline cursor-pointer">
+                        <div className="p-5 flex-1 flex flex-col relative bg-paper/30">
+                            {/* Floating Magical Icon */}
+                            <div className="absolute -top-6 right-4 w-12 h-12 bg-white border border-fb-border rounded-full flex items-center justify-center shadow-md group-hover:rotate-12 transition-transform duration-500 z-10">
+                                <FlaskConical className="text-purple-600" size={20} />
+                            </div>
+
+                            <h3 className="font-headline text-2xl text-fb-blue font-bold mb-2 group-hover:text-purple-700 transition-colors">
                                 {project.title}
                             </h3>
-                            <p className="font-serif text-sm text-ink/70 mb-4 flex-1 leading-relaxed">
+                            <p className="font-serif text-sm text-ink/70 mb-5 flex-1 leading-relaxed border-l-2 border-purple-200 pl-3">
                                 {project.description}
                             </p>
 
-                            {/* Tags */}
-                            <div className="flex flex-wrap gap-2 mb-4">
-                                {project.tags.map(tag => (
-                                    <span key={tag} className="text-[10px] uppercase font-bold text-ink/50 bg-ink/5 px-2 py-1 rounded">
-                                        {tag}
-                                    </span>
-                                ))}
+                            {/* Tags (Ingredients) */}
+                            <div className="mb-5">
+                                <h4 className="text-[10px] uppercase font-bold text-ink/40 mb-2 tracking-wider">Potion Ingredients</h4>
+                                <div className="flex flex-wrap gap-2">
+                                    {project.tags.map(tag => (
+                                        <span key={tag} className="text-[10px] font-bold text-purple-900/80 bg-purple-50 border border-purple-100 px-2 py-1 rounded shadow-sm">
+                                            {tag}
+                                        </span>
+                                    ))}
+                                </div>
                             </div>
 
                             {/* Actions */}
-                            <div className="flex gap-2 pt-3 border-t border-fb-border">
-                                <button className="flex-1 flex items-center justify-center gap-2 bg-fb-blue text-white text-xs font-bold py-2 rounded-sm shadow hover:bg-fb-blue-dark transition-colors">
-                                    <ExternalLink size={14} /> Launch
-                                </button>
-                                <button className="flex-1 flex items-center justify-center gap-2 bg-white text-ink/70 border border-ink/20 text-xs font-bold py-2 rounded-sm hover:bg-ink/5 transition-colors">
-                                    <Github size={14} /> Incantation
-                                </button>
+                            <div className="flex gap-3 pt-4 border-t border-ink/10">
+                                <a
+                                    href={project.link}
+                                    target="_blank"
+                                    rel="noreferrer"
+                                    className="flex-1 flex items-center justify-center gap-2 bg-fb-blue text-white text-xs font-bold py-2.5 rounded shadow hover:bg-fb-blue-dark hover:shadow-lg transition-all active:scale-95"
+                                >
+                                    <ExternalLink size={14} /> Apparate (Live)
+                                </a>
+                                <a
+                                    href={project.github}
+                                    target="_blank"
+                                    rel="noreferrer"
+                                    className="flex-1 flex items-center justify-center gap-2 bg-white text-ink/70 border border-ink/20 text-xs font-bold py-2.5 rounded hover:bg-purple-50 hover:text-purple-800 hover:border-purple-200 transition-all"
+                                >
+                                    <Github size={14} /> Incantation (Code)
+                                </a>
                             </div>
                         </div>
                     </div>
                 ))}
 
                 {/* Placeholder / "Work in Progress" card */}
-                <div className="bg-paper border border-dashed border-ink/20 flex flex-col items-center justify-center p-8 text-center min-h-[300px] opacity-70 hover:opacity-100 transition-opacity cursor-pointer hover:bg-paper-dark">
-                    <BookOpen size={48} className="text-ink/30 mb-4" />
-                    <h3 className="font-headline text-xl text-ink/50 mb-1">Unfinished Manuscripts</h3>
-                    <p className="font-serif text-sm text-ink/40 max-w-xs">
-                        More magical projects are currently being brewed in the cauldron. Check back later!
+                <div className="bg-paper border-2 border-dashed border-ink/20 flex flex-col items-center justify-center p-8 text-center min-h-[350px] opacity-70 hover:opacity-100 transition-opacity cursor-pointer hover:bg-paper-dark hover:border-purple-300 group rounded-lg">
+                    <div className="w-16 h-16 bg-ink/5 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-500">
+                        <BookOpen size={32} className="text-ink/30 group-hover:text-purple-500 transition-colors" />
+                    </div>
+                    <h3 className="font-headline text-xl text-ink/50 mb-1 group-hover:text-purple-700">Unfinished Manuscripts</h3>
+                    <p className="font-serif text-sm text-ink/40 max-w-xs leading-relaxed">
+                        "More magical projects are currently being brewed in the cauldron. Check back later!"
                     </p>
                 </div>
             </div>
+
+            <style jsx>{`
+                @keyframes fadeOut {
+                    from { opacity: 0.8; }
+                    to { opacity: 0; }
+                }
+                .animate-fadeOut {
+                    animation: fadeOut 0.5s ease-out forwards;
+                }
+            `}</style>
         </div>
     );
 };

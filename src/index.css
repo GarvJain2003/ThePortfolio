@@ -1,0 +1,56 @@
+@import "tailwindcss";
+
+@theme {
+  /* Colors */
+  --color-paper: #f0e6d2;
+  --color-paper-dark: #e6dabb;
+  --color-ink: #1a1a1a;
+  --color-fb-blue: #3b5998;
+  --color-fb-blue-dark: #2d4373;
+  --color-fb-bg: #f7f7f7;
+  --color-fb-border: #d8dfea;
+
+  /* Fonts */
+  --font-headline: "Cinzel", "Playfair Display", serif;
+  --font-body: "Tahoma", "Verdana", sans-serif;
+
+  /* Backgrounds */
+  --background-image-paper-texture: url('https://www.transparenttextures.com/patterns/aged-paper.png');
+}
+
+/* Custom Base Styles */
+@layer base {
+  body {
+    background-color: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-body);
+    background-image: var(--background-image-paper-texture);
+    overflow-x: hidden;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-headline);
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: var(--color-paper-dark);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: color-mix(in srgb, var(--color-ink) 20%, transparent);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: color-mix(in srgb, var(--color-ink) 40%, transparent);
+}

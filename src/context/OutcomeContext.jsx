@@ -113,6 +113,9 @@ export const OutcomeProvider = ({ children }) => {
         load('posts', setPosts);
         load('friends', setFriends);
         load('photos', setPhotos);
+
+        // Force avatar update (Fix for HMR/State retention)
+        setUser(prev => ({ ...prev, avatar: "/wizard_profile_v2.png" }));
     }, []);
 
     // --- Persistence (Save) ---

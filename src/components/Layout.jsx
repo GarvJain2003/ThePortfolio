@@ -1,10 +1,46 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import DevModeOverlay from './DevModeOverlay';
 import { Code, Terminal, Briefcase, Scroll, Sparkles, Feather } from 'lucide-react';
+import { useSpells } from '../hooks/useSpells';
+import SimpleModal from './SimpleModal';
 
 const Layout = ({ children, sidebar, onNavigate }) => {
+    const activeSpell = useSpells();
+    const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+    const [snitchCaught, setSnitchCaught] = useState(false);
+    const [showSnitchMessage, setShowSnitchMessage] = useState(false);
+
+    useEffect(() => {
+        const handleMouseMove = (e) => {
+            setMousePos({ x: e.clientX, y: e.clientY });
+        };
+        window.addEventListener('mousemove', handleMouseMove);
+        return () => window.removeEventListener('mousemove', handleMouseMove);
+    }, []);
+
+    const handleSnitchCatch = () => {
+        if (snitchCaught) return;
+        setSnitchCaught(true);
+        setShowSnitchMessage(true);
+        setTimeout(() => {
+            setSnitchCaught(false); // Reset eventualy
+        }, 30000);
+    };
+
     return (
-        <div className="min-h-screen bg-paper bg-repeat text-ink font-body flex flex-col">
+        <div className={`min-h-screen bg-paper bg-repeat text-ink font-body flex flex-col ${activeSpell === 'lumos' ? 'cursor-none' : ''}`}>
+
+            {/* Lumos Effect */}
+            {activeSpell === 'lumos' && (
+                <div
+                    className="fixed inset-0 pointer-events-none z-[100] mix-blend-hard-light"
+                    style={{
+                        background: `radial-gradient(circle 150px at ${mousePos.x}px ${mousePos.y}px, transparent 0%, rgba(0,0,0,0.98) 100%)`
+                    }}
+                >
+                </div>
+            )}
+
             {/* Fixed Header */}
             <div className="sticky top-0 z-50">
                 {/* Facebook Utility Bar */}
@@ -42,11 +78,27 @@ const Layout = ({ children, sidebar, onNavigate }) => {
             </div>
 
             {/* Golden Snitch (Floating Easter Egg) */}
-            <div className="fixed z-[60] pointer-events-none animate-fly-random w-8 h-8 opacity-0 hover:opacity-100 transition-opacity duration-300 group">
-                <div className="absolute inset-0 bg-yellow-400 rounded-full shadow-[0_0_10px_rgba(250,204,21,0.8)] animate-pulse"></div>
-                <div className="absolute -left-4 top-0 w-6 h-2 bg-white/50 rounded-full animate-flutter-left origin-right"></div>
-                <div className="absolute -right-4 top-0 w-6 h-2 bg-white/50 rounded-full animate-flutter-right origin-left"></div>
-            </div>
+            {!snitchCaught && (
+                <div
+                    className="fixed z-[60] animate-fly-random w-8 h-8 transition-all duration-300 group cursor-pointer hover:scale-125"
+                    onClick={handleSnitchCatch}
+                >
+                    <div className="absolute inset-0 bg-yellow-400 rounded-full shadow-[0_0_10px_rgba(250,204,21,0.8)] animate-pulse"></div>
+                    <div className="absolute -left-4 top-0 w-6 h-2 bg-white/50 rounded-full animate-flutter-left origin-right"></div>
+                    <div className="absolute -right-4 top-0 w-6 h-2 bg-white/50 rounded-full animate-flutter-right origin-left"></div>
+                </div>
+            )}
+
+            {showSnitchMessage && (
+                <SimpleModal
+                    title="150 POINTS TO GRYFFINDOR!"
+                    placeholder="The game ends... but the coding continues."
+                    buttonText="Mischief Managed"
+                    onClose={() => setShowSnitchMessage(false)}
+                    onSubmit={() => setShowSnitchMessage(false)}
+                    hideInput={true}
+                />
+            )}
 
             {/* Main Content Area */}
             <div className="flex-grow flex justify-center p-4 md:p-6 gap-6 max-w-7xl mx-auto w-full relative">

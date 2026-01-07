@@ -14,6 +14,7 @@ import FeedItem from './components/FeedItem';
 import { Image as ImageIcon } from 'lucide-react';
 import { OutcomeProvider, useOutcome } from './context/OutcomeContext';
 import SimpleModal from './components/SimpleModal';
+import MaraudersMapView from './components/MaraudersMapView';
 
 function AppContent() {
   const {
@@ -62,6 +63,7 @@ function AppContent() {
       case 'friends': return <FriendsView />;
       case 'photos': return <PhotosView />;
       case 'common-room': return <CommonRoomView />;
+      case 'app:marauder': return <MaraudersMapView />;
       case 'messages': return (
         <div className="bg-white p-8 text-center border border-fb-border">
           <h2 className="font-headline text-2xl">Owlery</h2>

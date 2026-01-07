@@ -101,7 +101,7 @@ export const OutcomeProvider = ({ children }) => {
     const [friends, setFriends] = useState(initialFriends);
     const [photos, setPhotos] = useState(initialPhotos);
     const [guilds, setGuilds] = useState(initialGuilds);
-    const [currentView, setCurrentView] = useState('feed');
+    const [currentView, setCurrentView] = useState('landing');
     const [notifications, setNotifications] = useState([]);
 
     // --- Persistence (Load) ---

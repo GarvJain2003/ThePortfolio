@@ -1,4 +1,4 @@
-import { User, Users, Image, Coffee, Scroll, BookOpen, Shield, Feather, Sparkles } from 'lucide-react';
+import { User, Users, Image, Coffee, Scroll, BookOpen, Shield, Feather, Sparkles, LogOut } from 'lucide-react';
 import { useOutcome } from '../context/OutcomeContext';
 
 const Sidebar = ({ onNavigate }) => {
@@ -151,6 +151,12 @@ const Sidebar = ({ onNavigate }) => {
 
             <div className="text-[10px] text-ink/40 text-center pt-4">
                 <p>Owl Post: garv@hogwarts.edu</p>
+                <button
+                    onClick={() => onNavigate('landing')}
+                    className="mt-4 w-full flex items-center justify-center gap-2 p-2 bg-ink/5 border border-ink/10 rounded hover:bg-red-900/10 hover:text-red-900 transition-colors text-ink/60 font-bold"
+                >
+                    <LogOut size={14} /> Mischief Managed (Logout)
+                </button>
             </div>
         </div>
     );

@@ -53,7 +53,7 @@ const Layout = ({ children, sidebar, onNavigate }) => {
                     </div>
                     <div className="flex gap-4 items-center">
                         <span className="opacity-80 hover:opacity-100 cursor-pointer" onClick={() => onNavigate && onNavigate('profile')}>Account Settings</span>
-                        <span className="opacity-80 hover:opacity-100 cursor-pointer" onClick={() => alert("Logout spell cast! (Mock)")}>Logout</span>
+                        <span className="opacity-80 hover:opacity-100 cursor-pointer" onClick={() => onNavigate && onNavigate('landing')}>Logout</span>
                     </div>
                 </div>
 

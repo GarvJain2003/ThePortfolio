@@ -15,6 +15,7 @@ import { Image as ImageIcon } from 'lucide-react';
 import { OutcomeProvider, useOutcome } from './context/OutcomeContext';
 import SimpleModal from './components/SimpleModal';
 import MaraudersMapView from './components/MaraudersMapView';
+import LandingPage from './components/LandingPage';
 
 function AppContent() {
   const {
@@ -127,6 +128,10 @@ function AppContent() {
       );
     }
   };
+
+  if (currentView === 'landing') {
+    return <LandingPage />;
+  }
 
   return (
     <Layout sidebar={<Sidebar onNavigate={setCurrentView} />} onNavigate={setCurrentView}>

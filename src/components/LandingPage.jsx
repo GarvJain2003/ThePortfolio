@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { gsap } from 'gsap';
 import { useOutcome } from '../context/OutcomeContext';
-import { School, Users, Sparkles, Feather, Footprints, Key } from 'lucide-react';
+import { School, Users, Sparkles, Feather, Footprints, Key, Telescope, Scroll } from 'lucide-react';
 
 const LandingPage = () => {
     const { setCurrentView, user } = useOutcome();
@@ -195,7 +195,7 @@ const LandingPage = () => {
                 {keys.map((key) => (
                     <div
                         key={key.id}
-                        className="absolute animate-float opacity-30 text-[#d4af37]"
+                        className="absolute animate-float opacity-20 text-[#d4af37]"
                         style={{
                             left: `${key.left}%`,
                             top: `${key.top}%`,
@@ -216,6 +216,7 @@ const LandingPage = () => {
 
             {/* Marauder's Map Overlay */}
             <div className={`fixed inset-0 z-[60] flex pointer-events-none perspective-[2000px] transition-opacity duration-1000 ${isTraveling ? 'opacity-0' : 'opacity-100'}`}>
+                {/* ... existing map flaps ... */}
                 {/* Left Flap */}
                 <div className="map-left w-1/2 h-full bg-paper border-r border-ink/20 shadow-2xl origin-left flex items-center justify-end p-12 relative overflow-hidden"
                     style={{
@@ -276,6 +277,138 @@ const LandingPage = () => {
                 </div>
             </div>
 
+            {/* --- EASTER EGGS LAYER (Desktop Only) --- */}
+            <div className="hidden lg:block absolute inset-0 pointer-events-none overflow-hidden z-[5]">
+
+                {/* 1. "The Social Network" Window (Far Left) - Dorm Room Style */}
+                <div className="absolute left-4 top-[20%] w-[200px] h-[320px] glass-window -rotate-2 transform hover:rotate-0 transition-transform duration-500 pointer-events-auto group flex flex-col items-center pt-4">
+
+                    {/* Visual: FACEMASH Header */}
+                    <div className="bg-[#900000] text-white px-2 py-1 font-bold tracking-widest text-[10px] w-[90%] text-center uppercase mb-2 shadow-sm">
+                        FACEMASH <span className="opacity-50 mx-1">|</span> EST. 2003
+                    </div>
+
+                    {/* The Algorithm (White Marker) */}
+                    <div className="px-4 text-white/50 font-marker text-xs leading-relaxed select-none w-full text-left">
+                        Ea = 1 / (1 + 10^((Rb-Ra)/400))<br />
+                        Eb = 1 / (1 + 10^((Ra-Rb)/400))<br />
+                    </div>
+
+                    {/* The Quote (Red Marker - "Merged") */}
+                    <div className="mt-4 px-2 font-marker text-red-800/80 text-lg leading-tight -rotate-3 text-center mix-blend-multiply" style={{ textShadow: "1px 1px 2px rgba(255,255,255,0.2)" }}>
+                        "You know what's<br />cool?<br />
+                        <span className="text-xl font-black text-red-900 border-b-2 border-red-900/50">A BILLION DOLLARS.</span>"
+                    </div>
+                </div>
+
+                {/* 2. "The Face" (Al Pacino) Background Watermark */}
+                <div className="absolute top-0 right-0 w-[500px] h-[500px] opacity-[0.03] pointer-events-none mix-blend-multiply"
+                    style={{
+                        backgroundImage: "url('https://upload.wikimedia.org/wikipedia/commons/c/c2/F_icon.svg')", // Placeholder - In real app use local asset or CSS shape
+                        backgroundSize: "contain",
+                        backgroundRepeat: "no-repeat",
+                        transform: "translate(30%, -30%)"
+                    }}>
+                </div>
+
+                {/* 3. Golden Snitch (Far Right) */}
+                <div
+                    className="absolute right-12 top-[15%] pointer-events-auto cursor-none transition-all duration-300 ease-out z-20"
+                    onMouseEnter={(e) => {
+                        // "Run Away" logic
+                        const target = e.currentTarget;
+                        const xMove = (Math.random() - 0.5) * 400; // Move randomly X
+                        const yMove = (Math.random() - 0.5) * 400; // Move randomly Y
+                        target.style.transform = `translate(${xMove}px, ${yMove}px) scale(0.5)`;
+                        target.style.opacity = "0";
+                        setTimeout(() => {
+                            target.style.transform = "translate(0,0) scale(1)";
+                            target.style.opacity = "1";
+                        }, 2000); // Reappear after 2s
+                    }}
+                >
+                    <div className="relative w-8 h-8 animate-hover-float">
+                        {/* Golden Ball */}
+                        <div className="w-full h-full rounded-full bg-gradient-to-br from-[#ffd700] via-[#b8860b] to-[#8b4513] shadow-[0_0_15px_#ffd700] border border-[#ffd700]"></div>
+                        {/* Wings */}
+                        <div className="absolute top-0 left-[-25px] w-[30px] h-[10px] bg-white/60 rounded-full animate-flutter-wing origin-right shadow-[0_0_5px_white]"></div>
+                        <div className="absolute top-0 right-[-25px] w-[30px] h-[10px] bg-white/60 rounded-full animate-flutter-wing origin-left shadow-[0_0_5px_white]"></div>
+                    </div>
+                </div>
+
+                {/* 4. Exhibit A: The Dilution Contract (Formal Prop) */}
+                <div className="absolute right-8 top-[30%] w-[270px] bg-[#fdfbf7] shadow-[5px_5px_15px_rgba(0,0,0,0.3)] rotate-2 hover:rotate-0 transition-transform duration-300 z-20 font-serif border border-[#d4c5a6]">
+
+                    {/* Paperclip */}
+                    <div className="absolute -top-3 left-6 w-4 h-12 border-2 border-gray-400 rounded-full bg-transparent z-30 shadow-sm"></div>
+                    <div className="absolute -top-3 left-6 w-4 h-8 border-2 border-gray-400 rounded-full bg-gray-200 opacity-50 z-20"></div>
+
+                    {/* Paper Texture Overlay */}
+                    <div className="absolute inset-0 opacity-10 pointer-events-none" style={{ backgroundImage: "url('https://www.transparenttextures.com/patterns/aged-paper.png')" }}></div>
+
+                    {/* Header */}
+                    <div className="p-4 pb-2 border-b border-[#d4c5a6] flex justify-between items-end">
+                        <div className="text-[#3b5998] font-bold text-sm tracking-tight font-tahoma opacity-90">[ TheFacebook ]</div>
+                        <div className="text-[10px] text-gray-500 font-mono">EXHIBIT A</div>
+                    </div>
+
+                    <div className="p-4 relative">
+                        <h4 className="text-center font-bold text-xs uppercase underline mb-3 text-ink">Shareholder Equity Schedule</h4>
+
+                        <table className="w-full text-left text-[10px] border-collapse relative z-10">
+                            <thead>
+                                <tr className="border-b border-gray-300">
+                                    <th className="py-1 pl-1 w-1/2">Shareholder</th>
+                                    <th className="py-1 text-right pr-1">Equity %</th>
+                                </tr>
+                            </thead>
+                            <tbody className="font-mono text-ink/90">
+                                <tr>
+                                    <td className="py-1 pl-1">Zuckerberg, M.</td>
+                                    <td className="text-right pr-1">51.00%</td>
+                                </tr>
+                                <tr className="relative">
+                                    <td className="py-1 pl-1 font-bold bg-yellow-100/50">Saverin, E.</td>
+                                    <td className="text-right pr-1 relative bg-yellow-100/50">
+                                        <span className="line-through decoration-red-600 decoration-2 opacity-60">30.0%</span>
+                                        <div className="absolute top-[-8px] right-0 rotate-[-12deg] text-red-700 font-extrabold text-sm drop-shadow-sm">0.03%</div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td className="py-1 pl-1">Moskovitz, D.</td>
+                                    <td className="text-right pr-1">6.47%</td>
+                                </tr>
+                                <tr>
+                                    <td className="py-1 pl-1">Parker, S.</td>
+                                    <td className="text-right pr-1">6.47%</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        {/* The "Ambush" Stamp */}
+                        <div className="absolute top-[35%] right-[5%] border-[3px] border-red-700/70 p-1 rounded-sm -rotate-12 pointer-events-none mix-blend-multiply opacity-80 animate-pulse">
+                            <span className="text-red-700/90 font-black text-lg tracking-widest uppercase font-mono">DILUTED</span>
+                        </div>
+
+                        {/* Sticky Note - The Friendly Advice */}
+                        <div className="absolute -bottom-6 -right-4 w-[140px] bg-[#fff9c4] p-3 shadow-[2px_4px_8px_rgba(0,0,0,0.2)] rotate-[-6deg] transform hover:scale-105 transition-transform duration-300 z-40">
+                            <div className="w-full h-full text-center">
+                                <p className="font-marker text-blue-900 text-[11px] leading-tight rotate-1">
+                                    "Always read the documents before signing."
+                                </p>
+                                <div className="mt-1 text-right">
+                                    <span className="font-marker text-[9px] text-red-600">- CFO</span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+
+
+            </div>
+
             <div className="landing-content">
                 {/* Header */}
                 <div className="bg-[#3b5998] p-0 border-b border-[#29487d]">
@@ -284,7 +417,7 @@ const LandingPage = () => {
                             [ TheSocialProphet ]
                         </h1>
                         <div className="text-white text-sm">
-                            <span className="mr-4 hover:underline cursor-pointer" onClick={() => setModalContent({ title: "Ministry Decree No. 24", body: "Registration is currently closed by order of the Ministry of Magic. Please present a Guest Pass (Take a Tour)." })}>Register</span>
+                            <span className="mr-4 hover:underline cursor-pointer" onClick={() => setModalContent({ title: "Ministry Decree No. 24", body: "Registration is currently closed by order of the Ministry of Magic. Please use your Hogwarts Express Ticket to board." })}>Register</span>
                             <span className="hover:underline cursor-pointer" onClick={() => setModalContent({ title: "About TheSocialProphet", body: "A magical social network reimagining 2004-era connectivity for the Wizarding World. Built by Garv Jain." })}>About</span>
                         </div>
                     </div>
@@ -293,109 +426,103 @@ const LandingPage = () => {
                 {/* Main Content */}
                 <div className="max-w-4xl mx-auto mt-8 flex flex-col md:flex-row gap-8 px-4">
 
-                    {/* Left Column: Info - Daily Prophet Style */}
+
+                    {/* Left Column: Info - Ministry Profile Style (Clean & Scannable) */}
                     <div className="md:w-3/5 space-y-6">
-                        <div className="space-y-4 border-b-2 border-ink/10 pb-6">
-                            <h2 className="font-headline font-bold text-4xl text-[#2c1810] leading-none mb-2">
-                                WIZARDING TALENT<br />DISCOVERED!
-                            </h2>
-                            <div className="flex items-center gap-2 text-xs font-serif text-ink/60 border-y border-ink/20 py-1 mb-4">
-                                <span>VOL. DCCXIII</span>
-                                <span>•</span>
-                                <span>The Daily Prophet</span>
-                                <span>•</span>
-                                <span>Latest Edition</span>
+                        {/* Profile Card */}
+                        <div className="bg-[#f8f5e6] p-8 shadow-lg border border-[#e5e7eb] relative overflow-hidden rounded-sm">
+                            {/* Decorative Top Border */}
+                            <div className="absolute top-0 left-0 w-full h-2 bg-[#740001]"></div>
+
+                            <div className="flex justify-between items-start mb-6">
+                                <div>
+                                    <h2 className="font-headline font-bold text-4xl text-[#2c1810]">
+                                        Garv Jain
+                                    </h2>
+                                    <p className="font-serif italic text-xl text-[#740001]">
+                                        Chief Magical Architect
+                                    </p>
+                                </div>
+
                             </div>
 
-                            {/* Portfolio Subheading */}
-                            <div className="font-serif italic text-xl text-[#740001] mb-2">
-                                Garv Jain Appointed Chief Magical Architect
+                            <p className="text-lg font-serif text-ink/80 leading-relaxed mb-6">
+                                Crafting immersive digital experiences by blending the best of Muggle technology with wizarding design. Specializing in high-performance web spells and full-stack alchemy.
+                            </p>
+
+                            <div className="space-y-4">
+                                <h3 className="font-headline font-bold text-sm uppercase tracking-widest text-[#740001] border-b border-[#740001]/20 pb-2">
+                                    Core Competencies
+                                </h3>
+
+                                <div className="flex flex-wrap gap-2">
+                                    {['React.js', 'Next.js', 'TailwindCSS', 'Three.js', 'Node.js', 'Firebase', 'System Architecture'].map((skill) => (
+                                        <span key={skill} className="px-3 py-1 bg-[#2c1810]/5 text-[#2c1810] text-sm font-bold border border-[#2c1810]/10 rounded-sm hover:bg-[#740001] hover:text-white transition-colors cursor-default">
+                                            {skill}
+                                        </span>
+                                    ))}
+                                </div>
                             </div>
 
-                            <p className="text-lg font-serif relative leading-relaxed text-justify">
-                                <span className="float-left text-5xl font-headline font-bold text-[#740001] mr-2 mt-[-10px] bg-paper px-1">T</span>
-                                he Ministry of Magic is proud to unveil the digital portfolio of <span className="font-bold">Garv Jain</span>, a wizard of exceptional skill in the arcane arts of Full Stack Development.
-                                <span className="absolute -right-8 -top-4 text-ink/40 animate-write">
-                                    <Feather size={20} />
-                                </span>
-                            </p>
-                            <p className="text-lg font-serif text-justify">
-                                This "TheSocialProphet" network serves as a living demonstration of his ability to weave complex code into magical user experiences.
-                            </p>
-                        </div>
-
-                        {/* Ministry Decree Features */}
-                        <div className="bg-[#f8f5e6] p-6 border border-ink/10 shadow-sm relative overflow-hidden group">
-                            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#740001]/40 to-transparent"></div>
-
-                            <p className="font-headline font-bold text-center text-xl text-[#2c1810] mb-4 border-b border-ink/10 pb-2">
-                                KNOWN SPELLS & ABILITIES
-                            </p>
-
-                            <ul className="space-y-3 font-serif text-ink/80">
-                                <li className="flex items-start gap-3">
-                                    <div className="mt-1.5 w-1.5 h-1.5 rounded-full bg-[#740001]"></div>
-                                    <p><span className="italic font-bold text-[#740001]">Visual Charms</span>: Mastery of React.js, TailwindCSS, and Three.js for stunning interfaces.</p>
-                                </li>
-                                <li className="flex items-start gap-3">
-                                    <div className="mt-1.5 w-1.5 h-1.5 rounded-full bg-[#740001]"></div>
-                                    <p><span className="italic font-bold text-[#740001]">Potions & Alchemy</span>: Expert brewing of Node.js backends and Firebase databases.</p>
-                                </li>
-                                <li className="flex items-start gap-3">
-                                    <div className="mt-1.5 w-1.5 h-1.5 rounded-full bg-[#740001]"></div>
-                                    <p><span className="italic font-bold text-[#740001]">Defense Against Bugs</span>: Robust testing and architectural patterns for secure applications.</p>
-                                </li>
-                            </ul>
-
-                            <div className="mt-4 pt-3 border-t border-ink/10 flex justify-center opacity-60">
-                                <span className="font-headline text-[10px] tracking-[0.2em] uppercase text-[#740001]">Certified by The Ministry</span>
+                            <div className="absolute bottom-4 right-4 opacity-10">
+                                <School size={120} />
                             </div>
                         </div>
 
-                        <div className="flex gap-6 justify-center py-4 opacity-80 scale-90">
-                            <div className="flex flex-col items-center gap-1 group cursor-help">
-                                <div className="p-2 border border-ink/20 rounded-full hover:border-[#740001] transition-colors">
-                                    <School size={20} className="text-ink/60 group-hover:text-[#740001]" />
-                                </div>
-                                <span className="text-[10px] font-bold uppercase tracking-widest text-ink/40">Connect</span>
-                            </div>
-                            <div className="flex flex-col items-center gap-1 group cursor-help">
-                                <div className="p-2 border border-ink/20 rounded-full hover:border-[#740001] transition-colors">
-                                    <Users size={20} className="text-ink/60 group-hover:text-[#740001]" />
-                                </div>
-                                <span className="text-[10px] font-bold uppercase tracking-widest text-ink/40">Compete</span>
-                            </div>
-                            <div className="flex flex-col items-center gap-1 group cursor-help">
-                                <div className="p-2 border border-ink/20 rounded-full hover:border-[#740001] transition-colors">
-                                    <Sparkles size={20} className="text-ink/60 group-hover:text-[#740001]" />
-                                </div>
-                                <span className="text-[10px] font-bold uppercase tracking-widest text-ink/40">Discover</span>
-                            </div>
+                        {/* Quick Links (Simplified) */}
+                        <div className="flex gap-4 opacity-90">
+                            {[
+                                { icon: Telescope, label: "Projects", action: "Explore", view: "projects" },
+                                { icon: Users, label: "Community", action: "Connect", view: "friends" },
+                                { icon: Scroll, label: "Resume", action: "Review", view: "resume" }
+                            ].map((item, i) => (
+                                <button
+                                    key={i}
+                                    onClick={() => setCurrentView(item.view)}
+                                    className="poke-hover flex-1 bg-white/50 hover:bg-white border border-ink/10 p-4 rounded-sm transition-all text-left group"
+                                >
+                                    <div className="flex items-center gap-3 mb-1">
+                                        <item.icon size={18} className="text-[#740001]" />
+                                        <span className="font-headline font-bold text-sm text-[#2c1810]">{item.label}</span>
+                                    </div>
+                                    <span className="text-xs font-serif text-ink/60 group-hover:text-[#740001] transition-colors pl-8 block">
+                                        {item.action} &rarr;
+                                    </span>
+                                </button>
+                            ))}
                         </div>
                     </div>
 
                     {/* Right Column: Login */}
                     <div className="md:w-2/5 relative perspective-1000">
-                        <div className={`ticket-content relative border-2 border-dashed border-[#d4af37]/30 p-6 shadow-2xl ${isBoarding ? 'animate-pulse' : ''}`} style={{ backgroundImage: "var(--background-brick-wall)", backgroundColor: "#2a1b1b", backgroundSize: "40px 40px", boxShadow: "inset 0 0 60px rgba(0,0,0,0.7)" }}>
+                        <div className={`ticket-content relative border-none p-6 shadow-2xl ${isBoarding ? 'animate-pulse' : ''}`}
+                            style={{
+                                backgroundImage: "var(--background-brick-wall)",
+                                backgroundColor: "#2a1b1b",
+                                backgroundSize: "40px 40px",
+                                boxShadow: "inset 0 0 60px rgba(0,0,0,0.7)",
+                                maskImage: "radial-gradient(circle at 0 240px, transparent 20px, black 21px), radial-gradient(circle at 100% 240px, transparent 20px, black 21px)",
+                                WebkitMaskImage: "radial-gradient(circle at 0 240px, transparent 20px, black 21px), radial-gradient(circle at 100% 240px, transparent 20px, black 21px)"
+                            }}>
+                            <div className="absolute inset-x-0 top-[230px] border-b-2 border-dashed border-[#d4af37]/30 opacity-50"></div>
 
                             {/* Ticket Header */}
                             <div className="flex justify-between items-center border-b-2 border-double border-[#d4af37]/30 pb-4 mb-4">
                                 <div className="flex flex-col">
-                                    <span className="font-headline font-bold text-2xl text-white tracking-widest drop-shadow-md">HOGWARTS EXPRESS</span>
+                                    <span className="font-headline font-bold text-3xl text-gold-foil tracking-widest drop-shadow-md">HOGWARTS EXPRESS</span>
                                     <span className="font-serif text-xs text-[#d4af37] uppercase tracking-wide">London to Hogwarts</span>
                                 </div>
-                                <Sparkles className="text-[#d4af37] w-8 h-8 animate-pulse" />
                             </div>
 
                             {/* Main Body: Platform 9 3/4 */}
                             <div className="flex flex-col items-center justify-center py-6 space-y-4">
                                 <div className="relative w-32 h-32 rounded-full border-4 border-[#d4af37] flex items-center justify-center shadow-[inset_0_0_20px_rgba(0,0,0,0.5)] overflow-hidden" style={{ backgroundColor: "#2a1b1b", backgroundImage: "var(--background-brick-wall)", backgroundSize: "30px 30px" }}>
 
-                                    <div className="flex items-start font-headline text-[#d4af37] translate-x-2 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
+                                    <div className="flex items-start font-headline text-gold-foil translate-x-2 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
                                         <span className="text-7xl font-bold leading-none">9</span>
                                         <div className="flex flex-col items-center text-3xl font-bold leading-none ml-1 mt-1">
                                             <span>3</span>
-                                            <div className="h-0.5 w-full bg-current my-0.5"></div>
+                                            <div className="h-0.5 w-full bg-[#d4af37] my-0.5 animate-shimmer"></div>
                                             <span>4</span>
                                         </div>
                                     </div>
@@ -416,13 +543,13 @@ const LandingPage = () => {
                             </div>
 
                             {/* Footer Action */}
-                            <div className="flex justify-center items-center pt-4 border-t border-[#d4af37]/30">
+                            <div className="flex justify-center items-center pt-8 border-t border-[#d4af37]/30">
                                 <button
                                     onClick={handleBoardTrain}
-                                    className="group relative bg-[#d4af37] hover:bg-[#b08d26] text-[#2c1810] border-2 border-[#ffecb3] px-8 py-3 text-lg font-bold cursor-pointer shadow-[0_0_20px_rgba(212,175,55,0.4)] overflow-hidden transition-all rounded-sm"
+                                    className="group relative bg-[#d4af37] hover:bg-[#b08d26] text-[#2c1810] border-2 border-[#ffecb3] px-8 py-3 text-lg font-bold cursor-pointer shadow-[0_0_20px_rgba(212,175,55,0.4)] hover:shadow-[0_0_40px_rgba(212,175,55,0.8)] overflow-hidden transition-all rounded-sm scale-100 hover:scale-105 duration-300"
                                 >
                                     <span className="relative z-10 flex items-center gap-2">
-                                        Board Train <Sparkles size={18} />
+                                        Board Train
                                     </span>
                                     {/* Steam Effect on Hover */}
                                     <div className="absolute inset-0 bg-white/40 transform translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
@@ -430,24 +557,7 @@ const LandingPage = () => {
                             </div>
                         </div>
 
-                        <div className="mt-4 text-center">
-                            <button className="bg-[#42b72a] hover:bg-[#36a420] text-white border border-[#2b8a1d] px-4 py-1.5 text-sm font-bold w-full shadow-sm">
-                                Sorting Ceremony (Register)
-                            </button>
-                        </div>
 
-                        <div className="mt-4 text-center border-t border-[#d8dfea] pt-4">
-                            <span className="text-xs text-gray-500 block mb-2">Just visiting Hogwarts?</span>
-                            <button
-                                onClick={handleBoardTrain}
-                                className="group relative bg-white hover:bg-gray-50 text-[#3b5998] border-2 border-[#3b5998] px-4 py-2 text-sm font-bold w-full shadow-lg overflow-hidden"
-                            >
-                                <span className="relative z-10 flex items-center justify-center gap-2">
-                                    <Sparkles size={14} className="animate-pulse" /> Take a Tour (Guest Access)
-                                </span>
-                                <div className="absolute inset-0 bg-[#3b5998]/5 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300"></div>
-                            </button>
-                        </div>
 
                         {/* Simple Modal Overlay */}
                         {modalContent && (

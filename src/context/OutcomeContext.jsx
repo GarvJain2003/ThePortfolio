@@ -101,8 +101,41 @@ export const OutcomeProvider = ({ children }) => {
     const [friends, setFriends] = useState(initialFriends);
     const [photos, setPhotos] = useState(initialPhotos);
     const [guilds, setGuilds] = useState(initialGuilds);
-    const [currentView, setCurrentView] = useState('landing');
+
+    // --- History Management ---
+    // Initialize view from URL hash or default to 'landing'
+    const getInitialView = () => {
+        if (typeof window !== 'undefined') {
+            const hash = window.location.hash.replace('#', '');
+            return hash || 'landing';
+        }
+        return 'landing';
+    };
+
+    const [currentView, _setCurrentView] = useState(getInitialView);
     const [notifications, setNotifications] = useState([]);
+
+    // Sync with Browser History
+    useEffect(() => {
+        const handlePopState = (event) => {
+            if (event.state && event.state.view) {
+                _setCurrentView(event.state.view);
+            } else {
+                // Fallback for initial load or empty state
+                const hash = window.location.hash.replace('#', '');
+                _setCurrentView(hash || 'landing');
+            }
+        };
+
+        window.addEventListener('popstate', handlePopState);
+        return () => window.removeEventListener('popstate', handlePopState);
+    }, []);
+
+    // Wrapper to update state AND push history
+    const setCurrentView = (view) => {
+        _setCurrentView(view);
+        window.history.pushState({ view }, "", `#${view}`);
+    };
 
     // --- Persistence (Load) ---
     useEffect(() => {

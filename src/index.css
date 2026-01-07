@@ -13,6 +13,7 @@
   /* Fonts */
   --font-headline: "Cinzel", "Playfair Display", serif;
   --font-body: "Tahoma", "Verdana", sans-serif;
+  --font-newspaper: "Georgia", "Times New Roman", serif;
 
   /* Backgrounds */
   --background-image-paper-texture: url('https://www.transparenttextures.com/patterns/aged-paper.png');
@@ -20,6 +21,42 @@
     linear-gradient(155deg, rgba(0, 0, 0, 0.3) 23px, transparent 23px),
     linear-gradient(335deg, rgba(0, 0, 0, 0.3) 23px, transparent 23px),
     linear-gradient(155deg, rgba(0, 0, 0, 0.3) 23px, transparent 23px);
+}
+
+/* Custom Utilities */
+.text-gold-foil {
+  background: linear-gradient(45deg,
+      #bf953f 0%,
+      #fcf6ba 20%,
+      #b38728 40%,
+      #fbf5b7 60%,
+      #aa771c 80%,
+      #bf953f 100%);
+  background-size: 200% auto;
+  color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation: shimmer 3s linear infinite;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.drop-cap {
+  float: left;
+  font-family: var(--font-headline);
+  font-size: 3.5rem;
+  line-height: 0.8;
+  padding-right: 0.5rem;
+  padding-top: 0.2rem;
+  color: #2c1810;
+  font-weight: 700;
+}
+
+.newspaper-border-top {
+  border-top: double 4px rgba(26, 26, 26, 0.2);
+}
+
+.newspaper-border-bottom {
+  border-bottom: double 4px rgba(26, 26, 26, 0.2);
 }
 
 /* Custom Base Styles */
@@ -272,7 +309,133 @@
     animation: car-fly-by 8s linear infinite;
     /* Loop it periodically */
   }
+
+  /* Easter Egg Animations */
+  @keyframes flutter-wing {
+
+    0%,
+    100% {
+      transform: scaleY(1) rotate(0deg);
+    }
+
+    50% {
+      transform: scaleY(0.1) rotate(10deg);
+    }
+  }
+
+  /* Snitch moves randomly */
+  @keyframes hover-float {
+
+    0%,
+    100% {
+      transform: translateY(0) translateX(0);
+    }
+
+    25% {
+      transform: translateY(-15px) translateX(10px);
+    }
+
+    50% {
+      transform: translateY(5px) translateX(-5px);
+    }
+
+    75% {
+      transform: translateY(-10px) translateX(-10px);
+    }
+  }
+
+  .animate-flutter-wing {
+    animation: flutter-wing 0.1s infinite linear;
+  }
+
+  .animate-hover-float {
+    animation: hover-float 4s infinite ease-in-out;
+  }
+
+  /* Gentle Float (Broom) */
+  @keyframes float-slow {
+
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+
+  .animate-float-slow {
+    animation: float-slow 6s infinite ease-in-out;
+  }
+
+  /* Terminal Glass UI */
+  .terminal-glass {
+    background: linear-gradient(180deg,
+        rgba(10, 25, 47, 0.9) 0%,
+        rgba(10, 25, 47, 0.95) 100%);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(100, 255, 218, 0.3);
+    box-shadow:
+      0 0 20px rgba(100, 255, 218, 0.1),
+      0 10px 40px -10px rgba(2, 12, 27, 0.8);
+    background-size: 100% 3px;
+    background-image: repeating-linear-gradient(0deg,
+        transparent,
+        transparent 1px,
+        rgba(0, 0, 0, 0.2) 1px,
+        rgba(0, 0, 0, 0.2) 2px);
+  }
+
+  .cursor-blink {
+    animation: blink 1s step-end infinite;
+  }
+
+  @keyframes blink {
+
+    0%,
+    100% {
+      opacity: 1;
+    }
+
+    50% {
+      opacity: 0;
+    }
+  }
+
+  /* Glass Window Effect */
+  .glass-window {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(2px);
+    box-shadow:
+      inset 0 0 20px rgba(255, 255, 255, 0.2),
+      0 0 15px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  /* Stamp Effect */
+  .stamp-text {
+    color: #c0392b;
+    border: 3px solid #c0392b;
+    padding: 0.25rem 0.5rem;
+    text-transform: uppercase;
+    font-weight: 900;
+    font-family: "Courier New", Courier, monospace;
+    letter-spacing: 0.1em;
+    transform: rotate(-15deg);
+    mask-image: url('https://www.transparenttextures.com/patterns/grunge-overlay.png');
+    opacity: 0.9;
+    mix-blend-mode: multiply;
+  }
+
+  /* Handwriting Font Simulation */
+  .font-marker {
+    font-family: "Brush Script MT", "Comic Sans MS", "Marker Felt", "Chalkboard SE", cursive;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+  }
 }
+
 
 /* Custom Scrollbar */
 ::-webkit-scrollbar {

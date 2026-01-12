@@ -8,20 +8,20 @@ const ProjectsGallery = () => {
         {
             id: 1,
             title: "Shatranj (Wizard's Chess)",
-            description: "A cloud-native multiplayer chess platform featuring real-time peer-to-peer video chat (WebRTC), offline board connectivity, and AI opponents. Scaled to 3.3K+ weekly reads.",
+            description: "A cross-platform chess ecosystem unifying physical and digital play. Features atomic matchmaking, social graph with private clubs, and IoT board integration.",
             image: "https://images.unsplash.com/photo-1586165368502-1bad197a6461?q=80&w=1258&auto=format&fit=crop", // Chess board
-            tags: ["React", "Firebase", "WebRTC", "Chess.js", "Tailwind"],
+            tags: ["React", "Firebase", "WebRTC", "IoT/ESP", "Electron"],
             link: "https://playshatranj.com",
-            github: "https://github.com/GarvJain2003/smart-chess-vite"
+            github: "https://github.com/GarvJain2003/CHESS"
         },
         {
             id: 2,
-            title: "Recruitment Portal",
-            description: "An automated evaluation system for university club recruitment. Features real-time Firestore scoring, CSV exports, and client-side image compression. Note: Internal tool.",
+            title: "Recruitment SaaS Platform",
+            description: "Multi-tenant SaaS platform serving 500+ users. Features schema-driven dynamic forms, URL-based orchestration, and serverless payment microservices.",
             image: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1170&auto=format&fit=crop", // Digital/Tech abstract
-            tags: ["JavaScript", "Firebase", "Canvas API"],
-            link: "#",
-            github: "https://github.com/GarvJain2003"
+            tags: ["React", "Cloud Functions", "SaaS Architecture"],
+            link: "https://recruitment-saas-b5cb8.web.app",
+            github: "https://github.com/GarvJain2003/recruitment-saas"
         },
         {
             id: 3,

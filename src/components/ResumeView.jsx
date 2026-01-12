@@ -35,10 +35,21 @@ const ResumeView = () => {
             });
 
             // Tilt Sections
+            // Tilt & Scatter Sections (More Chaos!)
             gsap.set(".section-card", {
-                rotation: () => Math.random() * 6 - 3,
-                y: () => Math.random() * 20 - 10,
-                opacity: 0.8
+                x: () => Math.random() * 60 - 30,
+                y: () => Math.random() * 60 - 30,
+                rotation: () => Math.random() * 10 - 5,
+                opacity: 0.9
+            });
+
+            // ⚠️ TOTAL CHAOS: Scatter specific text elements inside cards
+            gsap.set(".section-card h3, .section-card h4, .section-card p, .section-card li, .section-card .skill-item", {
+                x: () => Math.random() * 40 - 20,
+                y: () => Math.random() * 40 - 20,
+                rotation: () => Math.random() * 15 - 7,
+                scale: () => 0.9 + Math.random() * 0.2,
+                opacity: () => 0.7 + Math.random() * 0.3
             });
 
             // Initial blur for header
@@ -73,16 +84,16 @@ const ResumeView = () => {
             })
 
                 // 2. Levitate (Everything floats up slightly)
-                .to([".skill-item", ".section-card"], {
+                .to([".section-card", ".section-card h3", ".section-card h4", ".section-card p", ".section-card li", ".skill-item"], {
                     duration: 1,
-                    y: "-=50", // Float up
-                    rotation: "+=5", // Gentle twist
+                    y: "-=30", // Float up
+                    rotation: "+=2", // Gentle twist
                     ease: "sine.inOut",
                     stagger: { amount: 0.5, from: "random" }
                 }, "<0.2")
 
                 // 3. The Correction (Snap to grid)
-                .to([".skill-item", ".section-card"], {
+                .to([".section-card", ".section-card h3", ".section-card h4", ".section-card p", ".section-card li", ".skill-item"], {
                     duration: 1.2,
                     x: 0,
                     y: 0,
@@ -111,18 +122,22 @@ const ResumeView = () => {
             {/* Procedural CSS Wand & Incantation */}
             {/* Procedural CSS Wand & Incantation */}
             {!isSpellCast && (
-                <div className="fixed bottom-6 right-6 z-[100] animate-pulse-slow cursor-pointer group print:hidden"
-                    onClick={castSpell}
-                    title="Cast 'Wingardium Leviosa' to organize!">
+                <div className="fixed bottom-10 right-10 z-[100] cursor-pointer group print:hidden flex flex-col items-center gap-2"
+                    onClick={castSpell}>
+
+                    {/* Helper Text */}
+                    <div className="bg-white/90 text-ink px-4 py-2 rounded-full shadow-xl border-2 border-purple-500/50 font-bold animate-bounce mb-2 text-sm whitespace-nowrap">
+                        ✨ Messy? Click to Fix!
+                    </div>
 
                     {/* CSS Wand Icon (Miniaturized) */}
-                    <div className="wand-icon-wrapper relative w-16 h-16 bg-white/10 backdrop-blur-sm rounded-full border border-white/20 shadow-lg flex items-center justify-center transition-transform hover:scale-110 hover:rotate-12 hover:bg-white/20">
+                    <div className="wand-icon-wrapper relative w-20 h-20 bg-white/10 backdrop-blur-sm rounded-full border-2 border-white/40 shadow-2xl flex items-center justify-center transition-transform hover:scale-110 hover:rotate-12 hover:bg-white/20 animate-pulse-slow">
                         {/* Mini CSS Wand */}
-                        <div className="relative w-10 h-1 bg-gradient-to-r from-amber-900 via-amber-700 to-amber-200 rounded-full shadow-sm flex items-center -rotate-45">
+                        <div className="relative w-12 h-1.5 bg-gradient-to-r from-amber-900 via-amber-700 to-amber-200 rounded-full shadow-sm flex items-center -rotate-45">
                             {/* Handle */}
-                            <div className="absolute left-0 w-3 h-1.5 bg-gradient-to-r from-amber-950 to-amber-800 rounded-l-full"></div>
+                            <div className="absolute left-0 w-4 h-2 bg-gradient-to-r from-amber-950 to-amber-800 rounded-l-full"></div>
                             {/* Tip Glow */}
-                            <div className="absolute right-0 w-1.5 h-1.5 bg-purple-400 rounded-full blur-[1px] opacity-80 group-hover:opacity-100 group-hover:scale-150 transition-all duration-300"></div>
+                            <div className="absolute right-0 w-2 h-2 bg-purple-400 rounded-full blur-[2px] opacity-80 group-hover:opacity-100 group-hover:scale-150 transition-all duration-300"></div>
                         </div>
                     </div>
                 </div>
@@ -148,6 +163,9 @@ const ResumeView = () => {
                         <span className="flex items-center gap-1"><Book size={12} /> IET DAVV</span>
                         <span className="flex items-center gap-1"><Star size={12} /> BE (2026)</span>
                         <span className="flex items-center gap-1"><Feather size={12} /> CGPA: 8.01</span>
+                    </div>
+                    <div className="text-center mt-2 text-xs font-serif italic text-ink/60 print:text-black">
+                        Relevant Coursework: DSA, OS, DBMS, Networks, System Design
                     </div>
                     <div className="flex justify-center gap-4 mt-2 text-xs text-ink/70 print:text-black">
                         <a href="mailto:garvjain2003@gmail.com" className="hover:text-fb-blue hover:underline">garvjain2003@gmail.com</a>
@@ -176,53 +194,36 @@ const ResumeView = () => {
 
                         <div className="space-y-4">
                             <div>
-                                <h4 className="font-bold text-xs uppercase tracking-wider text-ink/50 mb-2 print:text-black">Languages & Tools</h4>
-                                <div className="flex flex-wrap gap-2 relative min-h-[50px]">
-                                    {['JavaScript', 'C++', 'Python', 'R', 'SQL', 'Git', 'Docker'].map((skill) => (
-                                        <div
-                                            key={skill}
-                                            className="skill-item group relative cursor-help"
-                                        >
-                                            <span className="bg-fb-blue/5 text-fb-blue text-xs px-2 py-1 rounded border border-fb-blue/10 hover:bg-fb-blue hover:text-white transition-colors print:bg-transparent print:text-black print:border-gray-300 block">
-                                                {skill}
-                                            </span>
-                                            {skillDescriptions[skill] && isSpellCast && (
-                                                <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-48 bg-ink text-[#fcf5e5] text-[10px] p-2 rounded shadow-lg opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10 print:hidden text-center">
-                                                    {skillDescriptions[skill]}
-                                                    <div className="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-ink"></div>
-                                                </div>
-                                            )}
-                                        </div>
+                                <h4 className="font-bold text-xs uppercase tracking-wider text-ink/50 mb-2 print:text-black">Languages</h4>
+                                <div className="flex flex-wrap gap-2">
+                                    {['JavaScript (ES6+)', 'Python', 'C++', 'SQL', 'HTML5/CSS3'].map((skill) => (
+                                        <span key={skill} className="bg-fb-blue/5 text-fb-blue text-xs px-2 py-1 rounded border border-fb-blue/10 print:border-gray-300 block">{skill}</span>
                                     ))}
                                 </div>
                             </div>
 
                             <div>
-                                <h4 className="font-bold text-xs uppercase tracking-wider text-ink/50 mb-2 print:text-black">Full Stack & Cloud</h4>
-                                <div className="flex flex-wrap gap-2 relative min-h-[50px]">
-                                    {['React.js', 'Firebase', 'WebRTC', 'GCP', 'Node.js', 'Express', 'Tailwind'].map((skill) => (
-                                        <div
-                                            key={skill}
-                                            className="skill-item group relative cursor-help"
-                                        >
-                                            <span className="bg-green-900/5 text-green-900 text-xs px-2 py-1 rounded border border-green-900/10 hover:bg-green-900 hover:text-white transition-colors print:bg-transparent print:text-black print:border-gray-300 block">
-                                                {skill}
-                                            </span>
-                                            {skillDescriptions[skill] && isSpellCast && (
-                                                <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-48 bg-ink text-[#fcf5e5] text-[10px] p-2 rounded shadow-lg opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10 print:hidden text-center">
-                                                    {skillDescriptions[skill]}
-                                                    <div className="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-ink"></div>
-                                                </div>
-                                            )}
-                                        </div>
+                                <h4 className="font-bold text-xs uppercase tracking-wider text-ink/50 mb-2 print:text-black">Technologies</h4>
+                                <div className="flex flex-wrap gap-2">
+                                    {['React', 'Node.js', 'Firebase', 'Zustand', 'WebRTC', 'Jest/Testing Library', 'Docker', 'Git'].map((skill) => (
+                                        <span key={skill} className="bg-green-900/5 text-green-900 text-xs px-2 py-1 rounded border border-green-900/10 print:border-gray-300 block">{skill}</span>
                                     ))}
                                 </div>
                             </div>
 
                             <div>
-                                <h4 className="font-bold text-xs uppercase tracking-wider text-ink/50 mb-2 print:text-black">Certifications</h4>
+                                <h4 className="font-bold text-xs uppercase tracking-wider text-ink/50 mb-2 print:text-black">Concepts</h4>
+                                <div className="flex flex-wrap gap-2">
+                                    {['System Design', 'Microservices', 'CI/CD', 'REST APIs', 'OOP', 'Unit Testing'].map((skill) => (
+                                        <span key={skill} className="bg-purple-900/5 text-purple-900 text-xs px-2 py-1 rounded border border-purple-900/10 print:border-gray-300 block">{skill}</span>
+                                    ))}
+                                </div>
+                            </div>
+
+                            <div>
+                                <h4 className="font-bold text-xs uppercase tracking-wider text-ink/50 mb-2 print:text-black">Meta Certifications</h4>
                                 <ul className="text-xs list-disc list-inside text-ink/80 space-y-1 print:text-black">
-                                    {['Google IT Support', 'Google Cloud Foundations', 'Google Data Analytics'].map(c => (
+                                    {['Back-End Development Professional', 'Front-End Development', 'Database Structures (MySQL)', 'iOS Mobile App Development', 'Meta Data Analyst'].map(c => (
                                         <li key={c}>{c}</li>
                                     ))}
                                 </ul>
@@ -258,39 +259,38 @@ const ResumeView = () => {
                             <div className="relative pl-4 border-l-2 border-fb-border print:border-l-gray-300">
                                 <div className="absolute -left-[5px] top-0 w-2 h-2 bg-fb-blue rounded-full print:bg-black"></div>
                                 <h4 className="font-bold text-lg text-ink/90 flex items-center gap-2 print:text-black">
-                                    SHATRANJ
+                                    SHATRANJ — Real-Time Multiplayer Chess
                                     <a href="https://playshatranj.com" target="_blank" rel="noreferrer" className="text-xs px-2 py-0.5 bg-fb-blue/10 text-fb-blue rounded hover:bg-fb-blue hover:text-white transition-colors font-normal print:no-underline print:text-black print:bg-transparent">
                                         playshatranj.com
                                     </a>
                                 </h4>
-                                <p className="text-xs text-ink/50 mb-2 font-mono print:text-gray-600">React, Firebase, WebRTC, Chess.js, Tailwind</p>
+                                <p className="text-xs text-ink/50 mb-2 font-mono print:text-gray-600">React, Firebase, WebRTC, Zustand, Electron, Capacitor</p>
                                 <ul className="list-disc list-outside ml-4 text-sm text-ink/80 space-y-1 font-serif text-justify print:text-black">
-                                    <li>Engineered a cloud-native Chess platform supporting real-time online matches, offline board connection, and AI modes.</li>
-                                    <li>Built peer-to-peer video chat using WebRTC with Firebase signaling.</li>
-                                    <li>Scaled to support 3.3K+ weekly reads and 31 MAU (11 DAU peak).</li>
+                                    <li>Architected a <strong>cross-platform</strong> chess ecosystem unifying physical and digital play, deployed to Web, Desktop, and Mobile.</li>
+                                    <li>Engineered a <strong>fault-tolerant multiplayer engine</strong> using Firestore Transactions and <strong>optimistic UI</strong> for sub-second sync.</li>
+                                    <li>Built a <strong>complex social graph</strong> enabling bidirectional friendships, feeds, and private clubs with <strong>RBAC</strong> security.</li>
+                                    <li>Integrated <strong>IoT hardware</strong> for physical boards using ESP+LDR to bridge physical moves with digital engine.</li>
+                                    <li>Implemented <strong>Feature-Sliced Architecture</strong> with rigorous state management (Zustand) to maintain 60fps analysis.</li>
+                                    <li>Scaled to <strong>220+ MAU</strong> (58 peak DAU), validating system reliability under real-world concurrency.</li>
                                 </ul>
                             </div>
 
-                            {/* Project 2: Recruitment Platform */}
+                            {/* Project 2: Recruitment SaaS */}
                             <div className="relative pl-4 border-l-2 border-fb-border print:border-l-gray-300">
                                 <div className="absolute -left-[5px] top-0 w-2 h-2 bg-fb-blue/60 rounded-full print:bg-black"></div>
-                                <h4 className="font-bold text-lg text-ink/90 print:text-black">Recruitment & Evaluation Platform</h4>
-                                <p className="text-xs text-ink/50 mb-2 font-mono print:text-gray-600">JavaScript, Firebase, Canvas API</p>
+                                <h4 className="font-bold text-lg text-ink/90 flex items-center gap-2 print:text-black">
+                                    Recruitment SaaS Platform
+                                    <a href="https://recruitment-saas-b5cb8.web.app" target="_blank" rel="noreferrer" className="text-xs px-2 py-0.5 bg-fb-blue/10 text-fb-blue rounded hover:bg-fb-blue hover:text-white transition-colors font-normal print:no-underline print:text-black print:bg-transparent">
+                                        Demo
+                                    </a>
+                                </h4>
+                                <p className="text-xs text-ink/50 mb-2 font-mono print:text-gray-600">JS, Cloud Functions, Firestore, SortableJS, Node.js</p>
                                 <ul className="list-disc list-outside ml-4 text-sm text-ink/80 space-y-1 font-serif text-justify print:text-black">
-                                    <li>Built internal evaluation system for E-Cell & Robotronics recruitment serving 344+ MAU.</li>
-                                    <li>Implemented real-time Firestore backend with automated scoring and CSV exports.</li>
-                                    <li>Created client-side image compression and dynamic rendering using Vanilla JS.</li>
-                                </ul>
-                            </div>
-
-                            {/* Project 3: AI/ML Dashboard */}
-                            <div className="relative pl-4 border-l-2 border-fb-border print:border-l-gray-300">
-                                <div className="absolute -left-[5px] top-0 w-2 h-2 bg-fb-blue/30 rounded-full print:bg-black"></div>
-                                <h4 className="font-bold text-lg text-ink/90 print:text-black">AI/ML Dashboard + CNN Model</h4>
-                                <p className="text-xs text-ink/50 mb-2 font-mono print:text-gray-600">Python, TensorFlow, OpenCV, Tkinter</p>
-                                <ul className="list-disc list-outside ml-4 text-sm text-ink/80 space-y-1 font-serif text-justify print:text-black">
-                                    <li>Trained CNN on MNIST and classical ML models (Linear/Logistic Regression).</li>
-                                    <li>Integrated models into interactive Tkinter dashboard for real-time visualization.</li>
+                                    <li>Engineered a <strong>multi-tenant SaaS platform</strong> to unify recruitment for clubs, serving <strong>500+ candidates</strong>.</li>
+                                    <li>Designed a <strong>URL-based architecture</strong> allowing infinite organizations to coexist with isolated branding and data.</li>
+                                    <li>Built a <strong>schema-driven form engine</strong> where UI renders dynamically from JSON configs, decoupling frontend from DB.</li>
+                                    <li>Architected a <strong>serverless microservices layer</strong> for secure payments (Razorpay) and email automation.</li>
+                                    <li>Developed a custom <strong>drag-and-drop form builder</strong> empowering non-technical admins to build complex forms.</li>
                                 </ul>
                             </div>
                         </div>
@@ -310,7 +310,7 @@ const ResumeView = () => {
                                 </h4>
                                 <div className="text-xs text-ink/50 mb-1 print:text-gray-600">2024 - Present</div>
                                 <p className="text-sm text-ink/80 font-serif print:text-black">
-                                    Founded and scaled club to 600+ members. Led teams to Smart India Hackathon qualifications. Recognized by Patrika Newspaper.
+                                    Founded and scaled a robotics & innovation club with <strong>27 core members</strong> and a community of over <strong>600+ members</strong>. Led teams to Smart India Hackathon qualifications. Recognized by Patrika Newspaper.
                                 </p>
                             </div>
 
@@ -323,7 +323,7 @@ const ResumeView = () => {
                                 </h4>
                                 <div className="text-xs text-ink/50 mb-1 print:text-gray-600">2023 - 2025</div>
                                 <p className="text-sm text-ink/80 font-serif print:text-black">
-                                    Initiated Startup Vertical. Organized E-Summit 2023. Contributed to OneChip (Ministry of Education recognized).
+                                    Initiated Startup Vertical connecting <strong>1000+ students</strong> with startups. Organized major events (E-Summit). Recognized by Ministry of Education.
                                 </p>
                             </div>
                         </div>

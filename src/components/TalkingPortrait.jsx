@@ -1,12 +1,24 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Volume2, VolumeX } from 'lucide-react';
+import { useOutcome } from '../context/OutcomeContext';
 
 const TalkingPortrait = ({ name, imageSrc, quote, audioUrl }) => {
+    const { isMuted } = useOutcome();
     const [isHovered, setIsHovered] = useState(false);
     const [displayedText, setDisplayedText] = useState("");
     const [isTyping, setIsTyping] = useState(false);
     const [showSpeechBubble, setShowSpeechBubble] = useState(false);
+
+    // Audio Ref
+    const audioRef = useRef(null);
+
+    useEffect(() => {
+        if (audioUrl) {
+            audioRef.current = new Audio(audioUrl);
+            audioRef.current.volume = 0.5;
+        }
+    }, [audioUrl]);
 
     useEffect(() => {
         let typingTimeout;
@@ -14,11 +26,18 @@ const TalkingPortrait = ({ name, imageSrc, quote, audioUrl }) => {
             setShowSpeechBubble(true);
             setIsTyping(true);
             setDisplayedText("");
+
+            // Play Audio
+            if (audioRef.current && !isMuted) {
+                audioRef.current.currentTime = 0;
+                audioRef.current.play().catch(e => console.log("Audio play blocked", e));
+            }
+
             let charIndex = 0;
 
             const typeChar = () => {
                 if (charIndex < quote.length) {
-                    setDisplayedText(prev => prev + quote.charAt(charIndex));
+                    setDisplayedText(quote.slice(0, charIndex + 1));
                     charIndex++;
                     typingTimeout = setTimeout(typeChar, 50); // Typing speed
                 } else {
@@ -27,6 +46,12 @@ const TalkingPortrait = ({ name, imageSrc, quote, audioUrl }) => {
             };
             typeChar();
         } else {
+            // Stop Audio
+            if (audioRef.current) {
+                audioRef.current.pause();
+                audioRef.current.currentTime = 0;
+            }
+
             // Reset when not hovered (optional: could wait before hiding)
             setShowSpeechBubble(false);
             setDisplayedText("");
@@ -36,8 +61,11 @@ const TalkingPortrait = ({ name, imageSrc, quote, audioUrl }) => {
 
         return () => {
             if (typingTimeout) clearTimeout(typingTimeout);
+            if (audioRef.current) {
+                audioRef.current.pause();
+            }
         };
-    }, [isHovered, quote]);
+    }, [isHovered, quote, isMuted]);
 
 
     return (
@@ -62,6 +90,13 @@ const TalkingPortrait = ({ name, imageSrc, quote, audioUrl }) => {
 
                 {/* Magical Overlay */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-60"></div>
+
+                {/* Audio Indicator */}
+                {audioUrl && isHovered && (
+                    <div className="absolute top-2 right-2 text-[#fff9c4] bg-black/30 p-1 rounded-full animate-pulse">
+                        {isMuted ? <VolumeX size={16} /> : <Volume2 size={16} />}
+                    </div>
+                )}
             </div>
 
             {/* Name Plate */}

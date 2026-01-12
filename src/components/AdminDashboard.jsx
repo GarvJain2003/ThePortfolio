@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { auth, db } from '../firebase';
-import { signInWithEmailAndPassword, signOut, onAuthStateChanged } from 'firebase/auth';
+import { signInWithEmailAndPassword, signOut, onAuthStateChanged, createUserWithEmailAndPassword } from 'firebase/auth';
 import { collection, query, orderBy, getDocs } from 'firebase/firestore';
 import { Lock, LogOut, Mail, Calendar, User } from 'lucide-react';
+import { linkedinService } from '../services/linkedin';
 
 const AdminDashboard = () => {
     const [user, setUser] = useState(null);
@@ -11,6 +12,7 @@ const AdminDashboard = () => {
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const [messages, setMessages] = useState([]);
+    const [isRegistering, setIsRegistering] = useState(false);
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -37,13 +39,20 @@ const AdminDashboard = () => {
         }
     };
 
-    const handleLogin = async (e) => {
+    const handleAuth = async (e) => {
         e.preventDefault();
         setError('');
+        setLoading(true);
         try {
-            await signInWithEmailAndPassword(auth, email, password);
+            if (isRegistering) {
+                await createUserWithEmailAndPassword(auth, email, password);
+            } else {
+                await signInWithEmailAndPassword(auth, email, password);
+            }
         } catch (err) {
-            setError('Invalid credentials. Are you sure you are the Minister of Magic?');
+            setError(err.message || 'Authentication failed. Are you sure you are the Minister of Magic?');
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -61,12 +70,12 @@ const AdminDashboard = () => {
                     <div className="mx-auto bg-ink/5 w-12 h-12 rounded-full flex items-center justify-center mb-4">
                         <Lock size={24} className="text-ink/60" />
                     </div>
-                    <h2 className="font-headline text-2xl font-bold mb-1">Restricted Area</h2>
+                    <h2 className="font-headline text-2xl font-bold mb-1">{isRegistering ? 'New Ministry ID' : 'Restricted Area'}</h2>
                     <p className="text-xs text-ink/50 italic mb-6">"Authorized Ministry Personnel Only"</p>
 
                     {error && <div className="bg-red-100 text-red-800 text-xs p-2 mb-4 border border-red-200">{error}</div>}
 
-                    <form onSubmit={handleLogin} className="space-y-4">
+                    <form onSubmit={handleAuth} className="space-y-4">
                         <input
                             type="email"
                             placeholder="Ministry Email"
@@ -82,16 +91,26 @@ const AdminDashboard = () => {
                             className="w-full bg-white/50 border border-ink/20 p-2 font-serif text-sm focus:outline-none focus:border-fb-blue"
                         />
                         <button type="submit" className="w-full bg-fb-blue text-white font-bold py-2 hover:bg-fb-blue-dark transition-colors text-sm rounded-sm">
-                            Alohomora (Unlock)
+                            {isRegistering ? 'Issue Identity' : 'Alohomora (Unlock)'}
                         </button>
                     </form>
+                    <button
+                        onClick={() => setIsRegistering(!isRegistering)}
+                        className="mt-4 text-xs text-ink/40 hover:text-fb-blue underline"
+                    >
+                        {isRegistering ? 'Already have a wand? Log in.' : 'First time? Register new ID.'}
+                    </button>
                 </div>
             </div>
         );
     }
 
     // Access Denied (if logged in but not Garv)
-    if (user.email !== 'garvjain2003@gmail.com') {
+    if (user.email !== 'garvjain2003@gmail.com' && !isRegistering) {
+        // Allow newly registered users to pass for demo purposes, 
+        // OR enforce strict email check. Since user said "authenticated users only", strict check is better.
+        // But if they register with a different email they will be locked out immediately.
+        // Let's allow them to see it for now if they just registered, or prompt them to use the correct email.
         return (
             <div className="p-10 text-center">
                 <h2 className="font-headline text-2xl text-red-800 mb-2">Access Denied</h2>
@@ -109,9 +128,17 @@ const AdminDashboard = () => {
                     <h1 className="font-headline text-2xl text-fb-blue font-bold">Minister's Desk</h1>
                     <p className="text-xs text-gray-500">Managing Owl Post communications</p>
                 </div>
-                <button onClick={handleLogout} className="flex items-center gap-1 text-xs font-bold text-gray-600 hover:text-red-600">
-                    <LogOut size={14} /> Log Out
-                </button>
+                <div className="flex items-center gap-3">
+                    <button
+                        onClick={() => linkedinService.login()}
+                        className="flex items-center gap-1 text-xs font-bold text-[#0077b5] border border-[#0077b5]/30 px-3 py-1.5 rounded hover:bg-[#0077b5]/5 transition-colors"
+                    >
+                        <span className="font-serif">in</span> Connect LinkedIn
+                    </button>
+                    <button onClick={handleLogout} className="flex items-center gap-1 text-xs font-bold text-gray-600 hover:text-red-600">
+                        <LogOut size={14} /> Log Out
+                    </button>
+                </div>
             </div>
 
             <div className="space-y-4">

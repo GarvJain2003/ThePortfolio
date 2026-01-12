@@ -48,7 +48,7 @@ const FriendsView = () => {
                 {filteredFriends.map((friend) => (
                     <div key={friend.id} className="bg-white border border-fb-border p-3 flex gap-3 shadow-sm items-center">
                         <div className="w-16 h-16 bg-ink/10 border border-ink/10 flex-shrink-0">
-                            <img src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${friend.name}`} className="w-full h-full object-cover" alt={friend.name} />
+                            <img src={friend.image || `https://api.dicebear.com/7.x/avataaars/svg?seed=${friend.name}`} className="w-full h-full object-cover" alt={friend.name} />
                         </div>
                         <div className="flex-grow min-w-0">
                             <h3 className="font-bold text-fb-blue text-sm truncate cursor-pointer hover:underline">{friend.name}</h3>

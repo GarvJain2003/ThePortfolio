@@ -2,6 +2,7 @@ import React from 'react';
 import { MapPin, Briefcase, GraduationCap, Heart, Calendar, Wand2, Scroll, Sparkles, Feather, Printer } from 'lucide-react';
 import { useOutcome } from '../context/OutcomeContext';
 import FeedItem from './FeedItem';
+import StatusUpdate from './StatusUpdate';
 
 const ProfileView = () => {
     const { user, friends, posts, setCurrentView, notify } = useOutcome();
@@ -213,7 +214,7 @@ const ProfileView = () => {
                                 <div key={friend.id} className="relative group cursor-pointer transition-transform hover:-translate-y-1">
                                     <div className="w-12 h-12 rounded-full border-2 border-white shadow-sm overflow-hidden bg-gray-200">
                                         <img
-                                            src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${friend.name}`}
+                                            src={friend.image || `https://api.dicebear.com/7.x/avataaars/svg?seed=${friend.name}`}
                                             className="w-full h-full object-cover"
                                             alt={friend.name}
                                         />
@@ -227,13 +228,16 @@ const ProfileView = () => {
                     </div>
 
                     {/* Timeline / Pensieve Header */}
-                    <div className="flex items-center gap-4">
+                    <div className="flex items-center gap-4 mb-4">
                         <div className="h-px bg-ink/10 flex-grow"></div>
                         <h2 className="font-headline text-xl text-ink/40 uppercase tracking-[0.2em] flex items-center gap-2">
                             <Sparkles size={14} /> The Pensieve <Sparkles size={14} />
                         </h2>
                         <div className="h-px bg-ink/10 flex-grow"></div>
                     </div>
+
+                    {/* Status Update Input */}
+                    <StatusUpdate />
 
                     {/* Feed Content */}
                     <div className="space-y-6">

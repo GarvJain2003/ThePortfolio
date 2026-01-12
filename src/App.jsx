@@ -16,6 +16,10 @@ import { OutcomeProvider, useOutcome } from './context/OutcomeContext';
 import SimpleModal from './components/SimpleModal';
 import MaraudersMapView from './components/MaraudersMapView';
 import LandingPage from './components/LandingPage';
+import AuthModal from './components/AuthModal';
+
+import { HelmetProvider } from 'react-helmet-async';
+import SeoManager from './components/SeoManager';
 
 function AppContent() {
   const {
@@ -23,7 +27,9 @@ function AppContent() {
     setCurrentView,
     posts,
     addPost,
-    user
+    user,
+    isAuthModalOpen,
+    setIsAuthModalOpen
   } = useOutcome();
 
   const [inputValue, setInputValue] = React.useState("");
@@ -32,6 +38,13 @@ function AppContent() {
 
   const handlePost = () => {
     if (!inputValue.trim()) return;
+
+    // Auth Check
+    if (user.isGuest) {
+      setIsAuthModalOpen(true);
+      return;
+    }
+
     addPost(inputValue, photoUrl || null);
     setInputValue("");
     setPhotoUrl("");
@@ -124,17 +137,33 @@ function AppContent() {
           <div className="text-center p-4 text-ink/40 text-xs italic">
             — End of Magical Feed —
           </div>
+
+          {/* Auth Modal */}
+          {isAuthModalOpen && (
+            <AuthModal
+              onClose={() => setIsAuthModalOpen(false)}
+              onSuccess={() => {
+                // Optional: Auto-post logic could go here, but for now just close and let user click share again
+              }}
+            />
+          )}
         </div>
       );
     }
   };
 
   if (currentView === 'landing') {
-    return <LandingPage />;
+    return (
+      <>
+        <SeoManager />
+        <LandingPage />
+      </>
+    );
   }
 
   return (
     <Layout sidebar={<Sidebar onNavigate={setCurrentView} />} onNavigate={setCurrentView}>
+      <SeoManager />
       {renderContent()}
     </Layout>
   );
@@ -143,7 +172,9 @@ function AppContent() {
 export default function App() {
   return (
     <OutcomeProvider>
-      <AppContent />
+      <HelmetProvider>
+        <AppContent />
+      </HelmetProvider>
     </OutcomeProvider>
   );
 }

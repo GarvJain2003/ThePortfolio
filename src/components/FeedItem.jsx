@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { Heart, MessageCircle, Share2, Feather, Scroll, Sparkles, Pin } from 'lucide-react';
+import { Heart, MessageCircle, Share2, Feather, Scroll, Sparkles, Pin, Trash2 } from 'lucide-react';
 import { useOutcome } from '../context/OutcomeContext';
 
 const FeedItem = ({ item, onNavigate }) => {
-    const { toggleLike, addComment, user } = useOutcome();
+    const { toggleLike, addComment, user, deletePost, deleteComment } = useOutcome();
     const [showComments, setShowComments] = useState(false);
     const [commentText, setCommentText] = useState("");
 
@@ -94,6 +94,19 @@ const FeedItem = ({ item, onNavigate }) => {
                     className="flex items-center gap-1 text-xs font-bold hover:text-fb-blue transition-colors">
                     <Share2 size={14} /> Share
                 </button>
+                {/* Delete Option for Author or Admin */}
+                {(user.isAdmin || user.name === item.author || user.name === "Garv Jain") && (
+                    <button
+                        onClick={() => {
+                            if (window.confirm("Are you sure you want to vanish this post?")) {
+                                deletePost(item.id);
+                            }
+                        }}
+                        className="flex items-center gap-1 text-xs font-bold hover:text-red-600 transition-colors ml-auto"
+                    >
+                        <Trash2 size={14} /> Delete
+                    </button>
+                )}
             </div>
 
             {/* Comments Section */}
@@ -104,8 +117,21 @@ const FeedItem = ({ item, onNavigate }) => {
                         {item.comments && item.comments.length > 0 ? (
                             item.comments.map(comment => (
                                 <div key={comment.id} className="bg-fb-bg/50 p-2 rounded text-xs">
-                                    <span className="font-bold text-fb-blue mr-1">{comment.author}</span>
-                                    <span className="text-ink/80">{comment.text}</span>
+                                    <div className="flex justify-between items-start">
+                                        <div>
+                                            <span className="font-bold text-fb-blue mr-1">{comment.author}</span>
+                                            <span className="text-ink/80">{comment.text}</span>
+                                        </div>
+                                        {(user.isAdmin || user.name === comment.author) && (
+                                            <button
+                                                onClick={() => deleteComment(item.id, comment.id)}
+                                                className="text-red-400 hover:text-red-600 ml-2"
+                                                title="Delete Comment"
+                                            >
+                                                <Trash2 size={10} />
+                                            </button>
+                                        )}
+                                    </div>
                                     <div className="text-[10px] text-ink/40 mt-1">{comment.time}</div>
                                 </div>
                             ))

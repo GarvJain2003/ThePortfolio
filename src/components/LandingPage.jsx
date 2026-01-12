@@ -4,7 +4,7 @@ import { useOutcome } from '../context/OutcomeContext';
 import { School, Users, Sparkles, Feather, Footprints, Key, Telescope, Scroll } from 'lucide-react';
 
 const LandingPage = () => {
-    const { setCurrentView, user } = useOutcome();
+    const { setCurrentView, user, playSound } = useOutcome();
     const [isBoarding, setIsBoarding] = useState(false);
     const [isTraveling, setIsTraveling] = useState(false);
 
@@ -14,6 +14,7 @@ const LandingPage = () => {
     const handleBoardTrain = (e) => {
         if (e) e.preventDefault();
         setIsBoarding(true);
+        playSound('train-whistle'); // Sound Effect
 
         // Steam/Smoke Animation sequence
         const timeline = gsap.timeline({
@@ -21,14 +22,38 @@ const LandingPage = () => {
                 // Start Train Ride instead of immediate navigation
                 setIsTraveling(true);
 
-                // Ride for 4 seconds then arrive
-                setTimeout(() => {
-                    gsap.to(".train-overlay", {
+                // --- CINEMATIC SEQUENCE ---
+                const rideTl = gsap.timeline({
+                    onComplete: () => setCurrentView('profile')
+                });
+
+                // 1. Setup: Initial Speed
+                rideTl.to(".train-interior", { opacity: 1, duration: 1 })
+
+                    // 2. The Reveal: Fade out interior to show Castle
+                    .to(".train-interior", {
                         opacity: 0,
-                        duration: 1,
-                        onComplete: () => setCurrentView('profile')
-                    });
-                }, 4000);
+                        duration: 2,
+                        delay: 3,
+                        ease: "power2.inOut",
+                        onStart: () => playSound('magic-chime')
+                    })
+
+                    // 3. Castle Zoom (Parallax effect on the Castle layer)
+                    .to(".hogwarts-castle", {
+                        scale: 1.1,
+                        opacity: 1,
+                        duration: 5,
+                        ease: "power1.out"
+                    }, "<") // Start with interior fade out
+
+                    // 4. Fade to Black
+                    .to(".train-overlay", {
+                        backgroundColor: "#000",
+                        duration: 1.5,
+                        delay: 1 // Hold on castle for a second
+                    })
+                    .to(".hogwarts-castle", { opacity: 0, duration: 1 }, "<");
             }
         });
 
@@ -129,8 +154,17 @@ const LandingPage = () => {
                         ))}
                     </div>
 
+                    {/* Layer 5: HOGWARTS CASTLE REVEAL (Initially Hidden) */}
+                    <div className="hogwarts-castle absolute inset-0 z-20 opacity-0 bg-cover bg-center pointer-events-none transform scale-100"
+                        style={{
+                            backgroundImage: "url('/hogwarts_castle_night.png')",
+                        }}>
+                        {/* Castle Glow / Atmosphere */}
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                    </div>
+
                     {/* Layer 6: FABRICATED INTERIOR (Green Screen Removal) */}
-                    <div className="absolute inset-0 z-50 pointer-events-none flex flex-col">
+                    <div className="train-interior absolute inset-0 z-50 pointer-events-none flex flex-col">
 
                         {/* 1. Mahogany Wall with Window Cutout (Using radial mask for 100% Transparency) */}
                         <div className="absolute inset-0 z-10 bg-no-repeat shadow-[inset_0_0_200px_black]"

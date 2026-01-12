@@ -71,7 +71,7 @@ const Layout = ({ children, sidebar, onNavigate }) => {
                     {/* News Ticker */}
                     <div className="absolute bottom-0 left-0 right-0 bg-ink text-[#fcf5e5] text-[10px] font-bold uppercase tracking-widest py-1 overflow-hidden">
                         <div className="whitespace-nowrap animate-marquee inline-block">
-                            BREAKING NEWS: Garv Jain applies for Position of Software Engineer at Meta • "A heavy blow to Google" says Rita Skeeter • React 19 Spells Discovered in Ancient Ruins • Ministry of Magic Reforms Coding Standards • Flying Ford Anglia Spotted near Menlo Park •
+                            BREAKING NEWS: Garv Jain applies for Position of Software Engineer • "A heavy blow to Google" says Rita Skeeter • React 19 Spells Discovered in Ancient Ruins • Ministry of Magic Reforms Coding Standards • Flying Ford Anglia Spotted near Tech Hubs •
                         </div>
                     </div>
                 </div>
@@ -200,7 +200,7 @@ const Layout = ({ children, sidebar, onNavigate }) => {
 
             {/* Footer */}
             <footer className="text-center p-4 text-xs text-ink/60 border-t border-ink/20 mt-8 relative z-10">
-                The Social Prophet &copy; 2026 • A Meta-Magical Production
+                The Social Prophet &copy; 2026 • A Magical Production
             </footer>
 
             {/* Styles for new animations */}
